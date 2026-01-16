@@ -1,11 +1,11 @@
 package com.rolecraft.service;
 
-import com.rolecraft.model.JobDescription;
-import com.rolecraft.service.JobDescriptionService;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.rolecraft.model.JobDescription;
 
 @Service
 public class JobDescriptionServiceImpl implements JobDescriptionService {
