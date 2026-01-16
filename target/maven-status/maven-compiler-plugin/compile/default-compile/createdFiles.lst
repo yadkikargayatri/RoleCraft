@@ -1,0 +1,10 @@
+com\rolecraft\service\ResumeService.class
+com\rolecraft\service\JobDescriptionServiceImpl.class
+com\rolecraft\model\JobDescription.class
+com\rolecraft\model\Resume.class
+com\rolecraft\RoleCraftApplication.class
+com\rolecraft\service\JobDescriptionService.class
+com\rolecraft\parser\JobDescriptionParser.class
+com\rolecraft\controller\ResumeController.class
+com\rolecraft\service\ResumeServiceImpl.class
+com\rolecraft\parser\ResumeParser.class
