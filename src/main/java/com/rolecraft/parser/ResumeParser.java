@@ -32,17 +32,67 @@ public class ResumeParser {
             // Extract raw text from PDF/DOCX
             String content = tika.parseToString(is);
             // Normalize spaces
-            content = content.replaceAll("\\r?\\n", " ");
+            content = content.replaceAll("\\r?\\n+", "\n");
+
 
             Resume resume = new Resume();
+            resume.setTitle(extractTitle(content));
             resume.setSummary(extractSummary(content));
             resume.setSkills(extractSkills(content));
+            resume.setExperienceBullets(extractExperience(content));
 
             return resume;
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse resume", e);
         }
+    }
+
+    private List<String> extractExperience( String text) {
+        return List.of();
+    }
+    private String extractTitle(String text) {
+        if (text == null || text.isEmpty()) {
+            return "Software Engineer";
+        }
+
+        String[] lines = text.split("\\R");
+
+        for (String line : lines) {
+            String trimmed = line.trim();
+
+            // Rule 1: All caps role-like heading
+            if (trimmed.matches("^[A-Z ]{5,40}$")
+                    && trimmed.contains("ENGINEER")) {
+                return toTitleCase(trimmed);
+            }
+
+            // Rule 2: Common role keywords
+            if (trimmed.matches("(?i).*(software engineer|backend engineer|java developer).*")) {
+                return capitalizeWords(trimmed);
+            }
+        }
+
+        // Fallback
+        return "Software Engineer";
+    }
+
+    private String toTitleCase(String input) {
+        return capitalizeWords(input.toLowerCase());
+    }
+
+    
+    private String capitalizeWords(String input) {
+        String[] words = input.split(" ");
+        StringBuilder sb = new StringBuilder();
+
+        for (String word : words) {
+            if (word.isEmpty()) continue;
+            sb.append(Character.toUpperCase(word.charAt(0)))
+              .append(word.substring(1))
+              .append(" ");
+        }
+        return sb.toString().trim();
     }
 
     /**

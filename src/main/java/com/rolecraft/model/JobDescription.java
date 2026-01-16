@@ -11,7 +11,7 @@ public class JobDescription {
     private List<String> keywords;
     private String rawText;
     private List<String> skills;
-
+   
     public String getRawText() {
         return rawText;
     }

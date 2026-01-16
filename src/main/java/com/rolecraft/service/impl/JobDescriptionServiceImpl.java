@@ -1,4 +1,4 @@
-package com.rolecraft.service;
+package com.rolecraft.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.rolecraft.model.JobDescription;
+import com.rolecraft.service.JobDescriptionService;
 
 @Service
 public class JobDescriptionServiceImpl implements JobDescriptionService {
@@ -16,6 +17,9 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
         JobDescription jd = new JobDescription();
         jd.setRawText(jobDescription);
 
+
+
+        
         List<String> skills = extractSkills(jobDescription);
         jd.setSkills(skills);
 

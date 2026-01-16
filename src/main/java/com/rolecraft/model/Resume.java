@@ -3,8 +3,10 @@ import java.util.List;
 
 public class Resume {
 
+    private String title;
     private String summary;
     private List<String> skills;
+    private List<String> experienceBullets;
 
     public String getSummary() {
         return summary;
@@ -21,4 +23,19 @@ public class Resume {
     public void setSkills(List<String> skills) {
         this.skills = skills;
     }
+
+    public String getTitle() {
+       return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<String> getExperienceBullets() {
+        return experienceBullets;
+    }
+    public void setExperienceBullets(List<String> experienceBullets) {
+        this.experienceBullets = experienceBullets;
+    }   
 }
