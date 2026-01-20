@@ -1,65 +1,40 @@
 # RoleCraft
 AI based resume powering system
 
-
-
 Problem Statement
 
     Given:
-
-    1. A job link or job description
-
-    2. A base resume
-
-    Automatically generate a tailored, ATS-optimized resume aligned to the job requirements, without fabricating experience.
-
+        1. A job link or job description
+        2. A base resume
+        3. Automatically generate a tailored, ATS-optimized resume aligned to the job requirements, without fabricating experience.
 
 Core Features (MVP → Advanced)
 
     MVP (Must-Have)
-
     Job Description Ingestion
-
     Paste job description OR
-
     Provide job link → scrape description
-
     Resume Parsing
-
     Upload resume (PDF/DOCX)
-
     Convert into structured data (sections, bullets, skills)
-
     JD–Resume Matching
 
 Identify:
 
     Required skills
-
     Preferred skills
-
     Keywords
 
 Role expectations
 
-    Tailored Resume Generation
-
-    Re-order bullets
-
-    Rewrite bullets using JD terminology
-
-    Highlight relevant experience
-
-    De-emphasize unrelated content
-
-    Preserve truthfulness
-
-Export
-
-Download tailored resume as PDF or DOCX
-
-
-
+	Tailored Resume Generation
+	Re-order bullets
+	Rewrite bullets using JD terminology
+	Highlight relevant experience
+	De-emphasize unrelated content
+	Preserve truthfulness
+	Export
+	Download tailored resume as PDF or DOCX
 
 
 High-Level Architecture
