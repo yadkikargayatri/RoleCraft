@@ -12,11 +12,10 @@ Core Features (MVP → Advanced)
 
     MVP (Must-Have)
     Job Description Ingestion
-    Paste job description OR
-    Provide job link → scrape description
+    Paste job description OR Provide job link → scrape description
     Resume Parsing
     Upload resume (PDF/DOCX)
-    Convert into structured data (sections, bullets, skills)
+    Convert resume into structured data (sections, bullets, skills)
     JD–Resume Matching
 
 Identify:
