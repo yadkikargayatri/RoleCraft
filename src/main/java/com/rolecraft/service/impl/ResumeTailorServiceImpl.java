@@ -14,31 +14,57 @@ import com.rolecraft.service.ResumeTailorService;
 @Service
 public class ResumeTailorServiceImpl implements ResumeTailorService {
 
-    @Override
+   @Override
     public TailoredResume tailorResume(Resume resume, JobDescription jd, SkillMatchResult matchResult) {
-        TailoredResume tailored = new TailoredResume();
+    TailoredResume tailored = new TailoredResume();
 
-        // 1️⃣ Tailor summary
-        String summary = "Experienced " + resume.getTitle() + " with strong skills in "
-                + String.join(", ", matchResult.getMatchedSkills()) + ".";
-        tailored.setSummary(summary);
+    int matched = matchResult.getMatchedSkills().size();
+    int required = jd.getRequiredSkills().size();
 
-        // 2️⃣ Tailor skills section
-        List<String> tailoredSkills = new ArrayList<>(matchResult.getMatchedSkills());
-        // Optional: add missing skills if desired
-        tailored.setSkills(tailoredSkills);
+    double matchPercentage = required == 0
+        ? 0.0
+        : Math.round(((double) matched / required) * 10000.0) / 100.0;
 
-        // 3️⃣ Tailor experience bullets
-        List<String> bullets = new ArrayList<>();
+    tailored.setMatchPercentage(matchPercentage);
+
+    // 1️⃣ Tailor summary
+    String summary = "Experienced " + resume.getTitle() + " with strong skills in "
+            + String.join(", ", matchResult.getMatchedSkills()) + ".";
+    tailored.setSummary(summary);
+
+    // 2️⃣ Tailor skills section
+    List<String> tailoredSkills = matchResult.getMatchedSkills() != null ? new ArrayList<>(matchResult.getMatchedSkills()) : new ArrayList<>();
+    tailored.setSkills(tailoredSkills);
+
+    // 3️⃣ Tailor experience bullets
+    List<String> bullets = new ArrayList<>();
+    if (resume.getExperienceBullets() != null) {
         for (String bullet : resume.getExperienceBullets()) {
-            for (String skill : matchResult.getMatchedSkills()) {
-                if (bullet.toLowerCase().contains(skill.toLowerCase())) {
-                    bullets.add("✔ " + bullet); // highlight matched skills
-                }
+            boolean matches = matchResult.getMatchedSkills().stream()
+                .anyMatch(skill -> bullet.toLowerCase().contains(skill.toLowerCase()));
+
+            if (matches) {
+                bullets.add("- " + bullet);
             }
         }
-        tailored.setExperienceBullets(bullets);
-
-        return tailored;
     }
+
+    tailored.setExperienceBullets(bullets);
+
+    System.out.println("Matched: " + matched);
+System.out.println("Required: " + required);
+
+
+if (matchPercentage < 50) {
+    throw new IllegalArgumentException("Insufficient skill match");
+}
+
+
+
+    // 4️⃣ Match percentage
+    //tailored.setMatchPercentage(matchResult.getMatchPercentage());
+
+    return tailored;
+}
+
 }

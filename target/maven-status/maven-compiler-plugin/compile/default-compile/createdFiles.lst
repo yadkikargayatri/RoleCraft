@@ -1,3 +1,4 @@
+com\rolecraft\controller\dto\ResumeTailorRequest.class
 com\rolecraft\service\ResumeService.class
 com\rolecraft\model\JobDescription.class
 com\rolecraft\service\impl\ResumeTailorServiceImpl.class
@@ -12,9 +13,9 @@ com\rolecraft\service\impl\JobDescriptionServiceImpl.class
 com\rolecraft\model\Resume.class
 com\rolecraft\RoleCraftApplication.class
 com\rolecraft\service\ResumeTailorService.class
+com\rolecraft\model\JobDescriptionRequest.class
 com\rolecraft\service\impl\SkillMatchingServiceImpl.class
 com\rolecraft\service\JobDescriptionService.class
 com\rolecraft\parser\JobDescriptionParser.class
 com\rolecraft\controller\ResumeController.class
-com\rolecraft\controller\TailorRequest.class
 com\rolecraft\parser\ResumeParser.class

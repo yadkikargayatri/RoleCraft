@@ -4,7 +4,9 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\controller\ResumeController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\JobDescriptionService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescription.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescriptionRequest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\ResumeTailorServiceImpl.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ResumeTailorRequest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\ResumeTailorController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\RoleCraftApplication.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\JobDescriptionServiceImpl.java
