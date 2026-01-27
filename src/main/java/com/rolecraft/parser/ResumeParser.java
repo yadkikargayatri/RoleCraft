@@ -20,7 +20,6 @@ public class ResumeParser {
 
     private final Tika tika = new Tika();
 
-    // Define common skills for keyword matching
     private final List<String> SKILL_KEYWORDS = Arrays.asList(
             "Java", "Spring", "Spring Boot", "AWS", "React", "Vue", "SQL",
             "Python", "Docker", "Kubernetes", "Go", "Microservices", "REST",
@@ -29,17 +28,17 @@ public class ResumeParser {
 
     public Resume parse(MultipartFile file) {
         try (InputStream is = file.getInputStream()) {
-            // Extract raw text from PDF/DOCX
-            String content = tika.parseToString(is);
-            // Normalize spaces
-            content = content.replaceAll("\\r?\\n+", "\n");
 
+            String content = tika.parseToString(is);
+            content = content.replaceAll("\\r?\\n+", "\n");
 
             Resume resume = new Resume();
             resume.setTitle(extractTitle(content));
             resume.setSummary(extractSummary(content));
-            resume.setSkills(extractSkills(content));
-            resume.setExperienceBullets(extractExperience(content));
+
+            // ✅ Convert List → Set (NO CASTING)
+            resume.setSkills(new LinkedHashSet<>(extractSkills(content)));
+            resume.setExperienceBullets(new LinkedHashSet<>(extractExperience(content)));
 
             return resume;
 
@@ -48,9 +47,11 @@ public class ResumeParser {
         }
     }
 
-    private List<String> extractExperience( String text) {
+    public List<String> extractExperience(String text) {
+        // Stub for now (safe)
         return List.of();
     }
+
     private String extractTitle(String text) {
         if (text == null || text.isEmpty()) {
             return "Software Engineer";
@@ -61,19 +62,15 @@ public class ResumeParser {
         for (String line : lines) {
             String trimmed = line.trim();
 
-            // Rule 1: All caps role-like heading
-            if (trimmed.matches("^[A-Z ]{5,40}$")
-                    && trimmed.contains("ENGINEER")) {
+            if (trimmed.matches("^[A-Z ]{5,40}$") && trimmed.contains("ENGINEER")) {
                 return toTitleCase(trimmed);
             }
 
-            // Rule 2: Common role keywords
             if (trimmed.matches("(?i).*(software engineer|backend engineer|java developer).*")) {
                 return capitalizeWords(trimmed);
             }
         }
 
-        // Fallback
         return "Software Engineer";
     }
 
@@ -81,7 +78,6 @@ public class ResumeParser {
         return capitalizeWords(input.toLowerCase());
     }
 
-    
     private String capitalizeWords(String input) {
         String[] words = input.split(" ");
         StringBuilder sb = new StringBuilder();
@@ -95,28 +91,19 @@ public class ResumeParser {
         return sb.toString().trim();
     }
 
-    /**
-     * Extract the summary section from the resume
-     */
     private String extractSummary(String content) {
-        String summary = "";
-
-        // Regex: look for SUMMARY or Professional Summary heading
         Pattern pattern = Pattern.compile(
                 "(?i)(SUMMARY|Professional Summary)\\s*[:\\-]?\\s*(.*?)(?=\\s+[A-Z]{2,})"
         );
         Matcher matcher = pattern.matcher(content);
 
         if (matcher.find()) {
-            summary = matcher.group(2).trim();
+            return matcher.group(2).trim();
         }
 
-        return summary;
+        return "";
     }
 
-    /**
-     * Extract skills from the resume
-     */
     private List<String> extractSkills(String content) {
         Set<String> foundSkills = new LinkedHashSet<>();
         String lowerContent = content.toLowerCase();

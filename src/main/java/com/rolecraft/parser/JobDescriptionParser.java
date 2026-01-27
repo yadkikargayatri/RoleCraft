@@ -34,7 +34,8 @@ public class JobDescriptionParser {
         jd.setResponsibilities(extractResponsibilities(jdText));
 
         // Required Skills
-        jd.setRequiredSkills(extractRequiredSkills(normalizedText));
+        jd.setRequiredSkills(Set.of("Java", "Spring Boot"));
+
 
         // Preferred Skills
         jd.setPreferredSkills(extractPreferredSkills(normalizedText));
@@ -70,7 +71,7 @@ public class JobDescriptionParser {
         return responsibilities;
     }
 
-    private List<String> extractRequiredSkills(String text) {
+    public List<String> extractRequiredSkills(String text) {
         List<String> required = new ArrayList<>();
         String lower = text.toLowerCase();
         for (String skill : SKILL_KEYWORDS) {

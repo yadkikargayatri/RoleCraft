@@ -11,14 +11,23 @@ import com.rolecraft.model.Resume;
 import com.rolecraft.service.ResumeService;
 
 @RestController
-@RequestMapping("/api/resumes")
+@RequestMapping("/api/resume")
 public class ResumeController {
 
     private final ResumeService resumeService;
 
+    //@Autowired
+    //private ResumeServiceImpl service;
+
+    // @PostMapping("/tailor")
+    // public ResponseEntity<String> tailorResume(@RequestBody Resume resume, @RequestBody JobDescription jd) {
+    //     SkillMatchResult matchResult = new SkillMatchResult();
+    //     String result = service.tailorResume(resume, jd, matchResult);
+    //     return ResponseEntity.ok(result);
+    // }
     public ResumeController(ResumeService resumeService) {
-        this.resumeService = resumeService;
-    }
+         this.resumeService = resumeService;
+     }
 
     @PostMapping(
         value = "/upload",

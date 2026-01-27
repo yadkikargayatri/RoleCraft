@@ -1,0 +1,124 @@
+package com.rolecraft.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.rolecraft.model.JobDescription;
+import com.rolecraft.model.Resume;
+import com.rolecraft.model.SkillMatchResult;
+import com.rolecraft.model.TailoredResume;
+
+class ResumeTailorServiceImplTest {
+
+    private ResumeTailorServiceImpl resumeTailorService;
+
+    @BeforeEach
+    void setUp() {
+        resumeTailorService = new ResumeTailorServiceImpl();
+    }
+
+    private Resume createValidResume() {
+        // Resume resume = new Resume();
+        // resume.setTitle("Software Engineer");
+        // resume.setExperienceBullets(List.of(
+        //         "Developed REST APIs using Spring Boot",
+        //         "Worked with SQL databases",
+        //         "Implemented CI/CD pipelines"
+        // ));
+        // resume.setSkills(new HashSet<>(List.of("Java", "Spring Boot", "SQL", "CI/CD")));
+        Resume resume = new Resume();
+        resume.setExperienceBullets(new ArrayList<>(List.of(
+               "Developed REST APIs using Spring Boot",
+                "Worked with SQL databases"
+        )));
+        resume.setSkills(new HashSet<>(List.of("Java", "Spring Boot", "SQL")));
+        return resume;
+    }
+
+    private JobDescription createJobDescription() {
+        JobDescription jd = new JobDescription();
+        jd.setTitle("Software Engineer");
+        jd.setSkills(List.of("Java", "SQL"));
+        return jd;
+    }
+
+    private SkillMatchResult createSkillMatchResult() {
+        SkillMatchResult smr = new SkillMatchResult();
+        smr.setMatchedSkills(List.of("Java", "SQL"));
+        return smr;
+    }
+
+    @Test
+    void shouldGenerateSummaryWithTitleAndMatchedSkills() {
+        Resume resume = createValidResume();
+        JobDescription jd = createJobDescription();
+        SkillMatchResult skills = createSkillMatchResult();
+
+        TailoredResume tailored = resumeTailorService.tailorResume(resume, jd, skills);
+
+        assertNotNull(tailored);
+        assertTrue(tailored.getSummary().contains("Java"));
+        assertTrue(tailored.getSummary().contains("SQL"));
+        assertTrue(tailored.getSummary().contains(resume.getTitle()));
+    }
+
+    @Test
+    void shouldHandleEmptyMatchedSkillsGracefully() {
+        Resume resume = createValidResume();
+        JobDescription jd = createJobDescription();
+        SkillMatchResult skills = new SkillMatchResult(); // empty matched skills
+
+        TailoredResume tailored = resumeTailorService.tailorResume(resume, jd, skills);
+
+        assertNotNull(tailored);
+        assertTrue(tailored.getSummary().contains(resume.getTitle()));
+        assertTrue(tailored.getSummary().length() > 0);
+    }
+
+    @Test
+    void shouldIncludeOnlyMatchedSkillsInTailoredResume() {
+        Resume resume = createValidResume();
+        JobDescription jd = createJobDescription();
+        SkillMatchResult skills = createSkillMatchResult();
+
+        TailoredResume tailored = resumeTailorService.tailorResume(resume, jd, skills);
+
+        // Ensure only matched skills appear
+        tailored.getSkills().forEach(skill -> assertTrue(skills.getMatchedSkills().contains(skill)));
+    }
+
+    @Test
+    void shouldNotFailWhenExperienceBulletsAreEmpty() {
+        Resume resume = createValidResume();
+        resume.setExperienceBullets(List.of()); // empty bullets
+        JobDescription jd = createJobDescription();
+        SkillMatchResult skills = createSkillMatchResult();
+
+        TailoredResume tailored = resumeTailorService.tailorResume(resume, jd, skills);
+
+        assertNotNull(tailored);
+        assertTrue(tailored.getSummary().contains(resume.getTitle()));
+    }
+
+    @Test
+    void shouldSelectOnlyExperienceBulletsWithMatchedSkills() {
+        Resume resume = createValidResume();
+        JobDescription jd = createJobDescription();
+        SkillMatchResult skills = createSkillMatchResult();
+
+        TailoredResume tailored = resumeTailorService.tailorResume(resume, jd, skills);
+
+        // Only bullets containing matched skills should be included
+        tailored.getExperienceBullets().forEach(bullet -> {
+            boolean containsMatchedSkill = skills.getMatchedSkills().stream()
+                    .anyMatch(bullet::contains);
+            assertTrue(containsMatchedSkill);
+        });
+    }
+}

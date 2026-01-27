@@ -1,12 +1,12 @@
 package com.rolecraft.model;
-import java.util.List;
+import java.util.Set;
 
 public class Resume {
 
     private String title;
     private String summary;
-    private List<String> skills;
-    private List<String> experienceBullets;
+    private Set<String> skills;
+    private Set<String> experienceBullets;
 
     public String getSummary() {
         return summary;
@@ -16,11 +16,11 @@ public class Resume {
         this.summary = summary;
     }
 
-    public List<String> getSkills() {
+    public Set<String> getSkills() {
         return skills;
     }
     
-    public void setSkills(List<String> skills) {
+    public void setSkills(Set<String> skills) {
         this.skills = skills;
     }
 
@@ -32,10 +32,10 @@ public class Resume {
         this.title = title;
     }
 
-    public List<String> getExperienceBullets() {
+    public Set<String> getExperienceBullets() {
         return experienceBullets;
     }
-    public void setExperienceBullets(List<String> experienceBullets) {
+    public void setExperienceBullets(Set<String> experienceBullets) {
         this.experienceBullets = experienceBullets;
     }   
 }
