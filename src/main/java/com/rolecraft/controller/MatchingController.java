@@ -1,15 +1,15 @@
 package com.rolecraft.controller;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rolecraft.model.Resume;
+import com.rolecraft.controller.dto.SkillMatchRequest;
 import com.rolecraft.model.SkillMatchResult;
 import com.rolecraft.service.SkillMatchService;
 
@@ -23,13 +23,16 @@ public class MatchingController {
         this.skillMatchService = skillMatchService;
     }
 
-    @PostMapping
+    @PostMapping("/skills")
     public ResponseEntity<SkillMatchResult> matchSkills(
-            @RequestBody Resume resume,
-            @RequestParam Set<String> requiredSkills) {
+            @RequestBody SkillMatchRequest request
+    ) {
 
-        SkillMatchResult result =
-                skillMatchService.match(requiredSkills, resume);
+        Set<String> requiredSkills = new HashSet<>(request.getRequiredSkills());
+
+        Set<String> resumeSkills = new HashSet<>(request.getResumeSkills());
+
+        SkillMatchResult result = skillMatchService.matchSkills(requiredSkills, resumeSkills, new HashSet<>());
 
         return ResponseEntity.ok(result);
     }

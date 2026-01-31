@@ -2,16 +2,16 @@ package com.rolecraft.ai.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.rolecraft.ai.client.LLMClient;
-import com.rolecraft.ai.prompt.SkillExtractionPrompt;
 import com.rolecraft.ai.service.SkillExtractionService;
 
 @Service
 public class SkillExtractionServiceImpl implements SkillExtractionService {
-    
+
     private final LLMClient llmClient;
 
     public SkillExtractionServiceImpl(LLMClient llmClient) {
@@ -19,12 +19,38 @@ public class SkillExtractionServiceImpl implements SkillExtractionService {
     }
 
     @Override
-    public List<String> extractSkills(String jobDescriptionText) {
-        String prompt = SkillExtractionPrompt.buildPrompt(jobDescriptionText);
+    public List<String> extractFromResume(String resumeText) {
+        String prompt = """
+            Extract technical skills from the following resume text.
+            Return a comma-separated list of skills only.
+
+            Resume:
+            %s
+            """.formatted(resumeText);
+
+        return callLLM(prompt);
+    }
+
+    @Override
+    public List<String> extractFromJobDescription(String jobDescriptionText) {
+        String prompt = """
+            Extract required technical skills from the following job description.
+            Return a comma-separated list of skills only.
+
+            Job Description:
+            %s
+            """.formatted(jobDescriptionText);
+
+        return callLLM(prompt);
+    }
+
+    private List<String> callLLM(String prompt) {
         String response = llmClient.complete(prompt);
+
         return Arrays.stream(response.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
-                .toList();
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

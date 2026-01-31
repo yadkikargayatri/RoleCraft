@@ -1,7 +1,6 @@
 package com.rolecraft.parser;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -10,15 +9,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.tika.Tika;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.rolecraft.ai.service.SkillExtractionService;
 import com.rolecraft.model.Resume;
 
 @Component
 public class ResumeParser {
 
     private final Tika tika = new Tika();
+    @Autowired
+    private SkillExtractionService skillExtractionService;
 
     private final List<String> SKILL_KEYWORDS = Arrays.asList(
             "Java", "Spring", "Spring Boot", "AWS", "React", "Vue", "SQL",
@@ -114,6 +117,9 @@ public class ResumeParser {
             }
         }
 
-        return new ArrayList<>(foundSkills);
+        //return new ArrayList<>(foundSkills);
+        //use AI service to extract skills 
+        return skillExtractionService.extractFromResume(content);
+        
     }
 }

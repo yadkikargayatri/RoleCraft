@@ -3,6 +3,7 @@ package com.rolecraft.ai.client;
 import org.springframework.stereotype.Component;
 
 @Component
+
 public class MockLLMClient implements LLMClient {
     
     @Override

@@ -1,17 +1,18 @@
 package com.rolecraft.model;
+
 import java.util.List;
 
-
 public class SkillMatchResult {
+
     private List<String> matchedSkills;
     private List<String> missingSkills;
     private double matchPercentage;
 
-
     public SkillMatchResult() {
     }
 
-    public SkillMatchResult(List<String> matchedSkills, List<String> missingSkills, double matchPercentage) {
+    public SkillMatchResult(List<String> matchedSkills, List<String> missingSkills, double matchPercentage) 
+    {
         this.matchedSkills = matchedSkills;
         this.missingSkills = missingSkills;
         this.matchPercentage = matchPercentage;
@@ -30,7 +31,7 @@ public class SkillMatchResult {
     }
 
     public void setMissingSkills(List<String> missingSkills) {
-        this.missingSkills = missingSkills ;
+        this.missingSkills = missingSkills;
     }
 
     public double getMatchPercentage() {

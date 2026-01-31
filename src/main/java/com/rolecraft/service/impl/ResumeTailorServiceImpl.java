@@ -1,103 +1,81 @@
 package com.rolecraft.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rolecraft.exception.InvalidJobDescriptionException;
-import com.rolecraft.exception.InvalidResumeException;
+import com.rolecraft.ai.service.SkillExtractionService;
 import com.rolecraft.model.JobDescription;
 import com.rolecraft.model.Resume;
 import com.rolecraft.model.SkillMatchResult;
 import com.rolecraft.model.TailoredResume;
 import com.rolecraft.service.ResumeTailorService;
-
-
-
+import com.rolecraft.service.SkillMatchService;
 
 @Service
 public class ResumeTailorServiceImpl implements ResumeTailorService {
-  // Public API method to tailor a resume based on job description and skill match result
-   @Override
-    public TailoredResume tailorResume(Resume resume, JobDescription jd, SkillMatchResult matchResult) {
 
-    validateInput(resume, jd, matchResult);
-    TailoredResume tailored = new TailoredResume();
+    private final SkillExtractionService skillExtractionService;
+    private final SkillMatchService skillMatchService;
 
-    int matched = matchResult.getMatchedSkills().size();
-    int required = jd.getRequiredSkills().size();
-
-    double matchPercentage = required == 0
-        ? 0.0
-        : Math.round(((double) matched / required) * 10000.0) / 100.0;
-
-    tailored.setMatchPercentage(matchPercentage);
-
-    // 1️⃣ Tailor summary
-    String summary = "Experienced " + resume.getTitle() + " with strong skills in "
-            + String.join(", ", matchResult.getMatchedSkills()) + ".";
-    tailored.setSummary(summary);
-
-    // 2️⃣ Tailor skills section
-    List<String> tailoredSkills = matchResult.getMatchedSkills() != null ? new ArrayList<>(matchResult.getMatchedSkills()) : new ArrayList<>();
-    tailored.setSkills(tailoredSkills);
-
-    // 3️⃣ Tailor experience bullets
-    List<String> bullets = new ArrayList<>();
-    if (resume.getExperienceBullets() != null) {
-        for (String bullet : resume.getExperienceBullets()) {
-            boolean matches = matchResult.getMatchedSkills().stream()
-                .anyMatch(skill -> bullet.toLowerCase().contains(skill.toLowerCase()));
-
-            if (matches) {
-                bullets.add("- " + bullet);
-            }
-        }
+    @Autowired
+    public ResumeTailorServiceImpl(
+            SkillExtractionService skillExtractionService,
+            SkillMatchService skillMatchService
+    ) {
+        this.skillExtractionService = skillExtractionService;
+        this.skillMatchService = skillMatchService;
     }
 
-    tailored.setExperienceBullets(bullets);
+    @Override
+    public TailoredResume tailorResume(Resume resume, JobDescription jobDescription) {
 
-    System.out.println("Matched: " + matched);
-    System.out.println("Required: " + required);
+        // 1️⃣ AI skill extraction
+        Set<String> resumeSkills = new LinkedHashSet<>(
+                skillExtractionService.extractFromResume(
+                        resume.getSummary()
+                )
+        );
 
+        Set<String> jobSkills = new LinkedHashSet<>(
+                skillExtractionService.extractFromJobDescription(
+                        jobDescription.getRawText()
+                )
+        );
 
-    if (matchPercentage < 50) {
-        throw new IllegalArgumentException("Insufficient skill match");
+        // 2️⃣ Skill matching
+        SkillMatchResult matchResult = skillMatchService.matchSkills(
+                        jobSkills,
+                        resumeSkills,
+                        new HashSet<>()
+                );
+
+        // 3️⃣ Filter experience bullets by matched skills
+        Set<String> relevantExperience =
+                resume.getExperienceBullets().stream()
+                        .filter(bullet ->
+                                matchResult.getMatchedSkills().stream()
+                                        .anyMatch(skill ->
+                                                bullet.toLowerCase()
+                                                      .contains(skill.toLowerCase())
+                                        )
+                        )
+                        .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        // 4️⃣ Build tailored resume
+        TailoredResume tailoredResume = new TailoredResume();
+        tailoredResume.setTitle(resume.getTitle());
+        tailoredResume.setSummary(resume.getSummary());
+        tailoredResume.setMatchedSkills(
+                new LinkedHashSet<>(matchResult.getMatchedSkills())
+        );
+        tailoredResume.setExperienceBullets(relevantExperience);
+        tailoredResume.setMatchPercentage(matchResult.getMatchPercentage());
+
+        return tailoredResume;
     }
-
-    // 4️⃣ Match percentage
-    //tailored.setMatchPercentage(matchResult.getMatchPercentage());
-
-    return tailored;
-}
-
-
-private void validateInput(Resume resume, JobDescription jd, SkillMatchResult matchResult) {
-
-    if (resume == null) {
-        throw new InvalidResumeException("Resume cannot be null");
-    }
-
-    if (resume.getTitle() == null || resume.getTitle().isBlank()) {
-        throw new InvalidResumeException("Resume title is required");
-    }
-
-    if (resume.getExperienceBullets() == null || resume.getExperienceBullets().isEmpty()) {
-        throw new InvalidResumeException("Resume must contain experience bullets");
-    }
-
-    if (jd == null) {
-        throw new InvalidJobDescriptionException("Job description cannot be null");
-    }
-
-    if (jd.getRequiredSkills() == null || jd.getRequiredSkills().isEmpty()) {
-        throw new InvalidJobDescriptionException("Job description must contain required skills");
-    }
-
-    if (matchResult == null) {
-        throw new IllegalArgumentException("SkillMatchResult cannot be null");
-    }
-}
-
 }
