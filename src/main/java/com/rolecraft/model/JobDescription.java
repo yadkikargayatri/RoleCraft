@@ -1,12 +1,13 @@
 package com.rolecraft.model;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 public class JobDescription {
 
     private String title;
-    private Set<String> requiredSkills; // was incorrectly List<String>
+    private Set<String> requiredSkills =new LinkedHashSet<>(); // was incorrectly List<String>
 
     private List<String> preferredSkills;
     private List<String> responsibilities;
@@ -42,8 +43,8 @@ public class JobDescription {
         return requiredSkills;
     }
 
-    public void setRequiredSkills(Set<String> requiredSkills) {
-        this.requiredSkills = requiredSkills;
+    public void setRequiredSkills(List<String> extractedSkills) {
+        this.requiredSkills = new LinkedHashSet<>(extractedSkills);
     }
 
     public List<String> getPreferredSkills() {

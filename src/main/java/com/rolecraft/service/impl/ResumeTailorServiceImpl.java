@@ -25,14 +25,13 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
     @Autowired
     public ResumeTailorServiceImpl(
             SkillExtractionService skillExtractionService,
-            SkillMatchService skillMatchService
-    ) {
+            SkillMatchService skillMatchService) {
         this.skillExtractionService = skillExtractionService;
         this.skillMatchService = skillMatchService;
     }
 
     @Override
-    public TailoredResume tailorResume(Resume resume, JobDescription jobDescription) {
+    public TailoredResume tailorResume(Resume resume, JobDescription jobDescription, SkillMatchResult skillMatchResult) {
 
         // 1️⃣ AI skill extraction
         Set<String> resumeSkills = new LinkedHashSet<>(

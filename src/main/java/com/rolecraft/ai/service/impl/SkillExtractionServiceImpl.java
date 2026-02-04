@@ -44,7 +44,7 @@ public class SkillExtractionServiceImpl implements SkillExtractionService {
         return callLLM(prompt);
     }
 
-    private List<String> callLLM(String prompt) {
+    private List<String> callLLM(String prompt) {  // callLLM() splits the comma-separated respons, trims and filters emmpty strings and removes duplicates
         String response = llmClient.complete(prompt);
 
         return Arrays.stream(response.split(","))

@@ -17,6 +17,8 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\controller\advice\GlobalExceptionHa
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\JobDescriptionController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\MatchingController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\SkillExtractionService.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\AIRecommendationService.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\impl\AIRecommendationServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescription.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\exception\InvalidResumeException.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\SkillMatchRequest.java

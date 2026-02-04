@@ -1,6 +1,7 @@
 package com.rolecraft.model;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TailoredResume {
@@ -10,6 +11,7 @@ public class TailoredResume {
 
     private Set<String> matchedSkills = new LinkedHashSet<>();
     private Set<String> experienceBullets = new LinkedHashSet<>();
+    private List<String> aiSuggestions;
 
     private double matchPercentage;
 
@@ -56,5 +58,11 @@ public class TailoredResume {
 
     public void setMatchPercentage(double matchPercentage) {
         this.matchPercentage = matchPercentage;
+    }
+    public List<String> getAiSuggestions() {
+        return aiSuggestions;
+    }
+    public void setAiSuggestions(List<String> aiSuggestions) {
+        this.aiSuggestions = aiSuggestions;
     }
 }
