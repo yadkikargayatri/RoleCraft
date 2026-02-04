@@ -1,7 +1,7 @@
-# RoleCraft
+# RoleCraft 👩‍💻
 AI based resume powering system
 
-Problem Statement
+Problem Statement 📄
 
     Given:
         1. A job link or job description
@@ -36,7 +36,8 @@ Role expectations
 	Download tailored resume as PDF or DOCX
 
 
-High-Level Architecture
+High-Level Architecture 🖊️
+
 Client (Web UI)
    |
    v
@@ -62,15 +63,15 @@ This project is now a Spring Boot application. To run the application, use the f
 mvn spring-boot:run
 ```
 
-## Features
+## Features ⭐
 - AI-based resume generation
 - ATS optimization
 
-## Getting Started
+## Getting Started 🪜
 1. Clone the repository.
 2. Navigate to the project directory.
 3. Run the application using Maven.
 
-## Requirements
+## Requirements  
 - Java 17 or higher
 - Maven
