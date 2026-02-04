@@ -8,7 +8,7 @@ Problem Statement 📄
         2. A base resume
         3. Automatically generate a tailored, ATS-optimized resume aligned to the job requirements, without fabricating experience.
 
-Core Features (MVP → Advanced)
+Core Features (MVP → Advanced) ⭐
 
     MVP (Must-Have)
     Job Description Ingestion
@@ -18,13 +18,13 @@ Core Features (MVP → Advanced)
     Convert resume into structured data (sections, bullets, skills)
     JD–Resume Matching
 
-Identify:
+Identify: 🔎
 
     Required skills
     Preferred skills
     Keywords
 
-Role expectations
+Role expectations 🤔
 
 	Tailored Resume Generation
 	Re-order bullets
@@ -72,6 +72,6 @@ mvn spring-boot:run
 2. Navigate to the project directory.
 3. Run the application using Maven.
 
-## Requirements  
+## Requirements 
 - Java 17 or higher
 - Maven
