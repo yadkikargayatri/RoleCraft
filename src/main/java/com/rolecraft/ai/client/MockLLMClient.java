@@ -8,7 +8,12 @@ public class MockLLMClient implements LLMClient {
     
     @Override
     public String complete(String prompt) {
-        return "Java, Spring Boot, REST APIs, SQL, AWS";
+        return """
+        • Add AWS and cloud deployment experience
+        • Highlight Spring Boot microservices work
+        • Quantify performance improvements
+        • Align project descriptions with job requirements
+        """;
     }
 }
     

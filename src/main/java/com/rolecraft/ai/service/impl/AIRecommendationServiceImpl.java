@@ -1,6 +1,5 @@
 package com.rolecraft.ai.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,8 +20,11 @@ public class AIRecommendationServiceImpl implements AIRecommendationService {
     }
 
     @Override
-    public List<String> suggestImprovements(Resume resume, JobDescription jd, SkillMatchResult skillMatchResult) {
-        // Build a prompt for the LLM
+    public List<String> suggestImprovements(
+            Resume resume,
+            JobDescription jd,
+            SkillMatchResult skillMatchResult
+    ) {
         String prompt = """
             You are an AI assistant for resume optimization.
             A job description and a candidate's resume are provided.
@@ -38,26 +40,23 @@ public class AIRecommendationServiceImpl implements AIRecommendationService {
             Job Description Preferred Skills: %s
             Resume Skills: %s
             Resume Experience Summary: %s
+            Matched Skills: %s
+            Missing Skills: %s
             """.formatted(
                 jd.getRequiredSkills(),
                 jd.getPreferredSkills(),
                 resume.getSkills(),
-                resume.getSummary()
+                resume.getSummary(),
+                skillMatchResult.getMatchedSkills(),
+                skillMatchResult.getMissingSkills()
             );
 
-        // Call LLM
         String response = llmClient.complete(prompt);
 
-        // Split by bullets or lines
-        String[] lines = response.split("\\r?\\n|•|-");
-        List<String> suggestions = new ArrayList<>();
-        for (String line : lines) {
-            String trimmed = line.trim();
-            if (!trimmed.isEmpty()) {
-                suggestions.add(trimmed);
-            }
-        }
-
-        return suggestions;
+        return response.lines()
+                .map(String::trim)
+                .filter(line -> !line.isEmpty())
+                .toList();
     }
 }
+

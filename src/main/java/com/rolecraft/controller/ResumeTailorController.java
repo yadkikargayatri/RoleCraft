@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rolecraft.ai.service.AIRecommendationService;
 import com.rolecraft.controller.dto.ResumeTailorRequest;
 import com.rolecraft.model.SkillMatchResult;
 import com.rolecraft.model.TailoredResume;
-import com.rolecraft.service.SkillMatchService;
 import com.rolecraft.service.ResumeTailorService;
-import com.rolecraft.ai.service.AIRecommendationService;
+import com.rolecraft.service.SkillMatchService;
 
 @RestController
 @RequestMapping("/api/resume")
@@ -28,8 +28,7 @@ public class ResumeTailorController {
     public ResumeTailorController(
             ResumeTailorService resumeTailorService,
             SkillMatchService skillMatchService,
-            AIRecommendationService aiRecommendationService
-    ) {
+            AIRecommendationService aiRecommendationService) {
         this.resumeTailorService = resumeTailorService;
         this.skillMatchService = skillMatchService;
         this.aiRecommendationService = aiRecommendationService;
