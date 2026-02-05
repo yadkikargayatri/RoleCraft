@@ -1,8 +1,6 @@
 package com.rolecraft.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -17,23 +15,35 @@ public class SkillMatchServiceImpl implements SkillMatchService {
     public SkillMatchResult matchSkills(
             Set<String> requiredSkills,
             Set<String> resumeSkills,
-            Set<String> preferredSkills
+            Set<String> preferredSkills // optional, can be empty
     ) {
+        SkillMatchResult result = new SkillMatchResult();
+
+        // Matched skills: intersection of required and resume skills
         Set<String> matched = new HashSet<>(resumeSkills);
         matched.retainAll(requiredSkills);
+        result.setMatchedSkills(matched);
 
-        List<String> missing = new ArrayList<>(requiredSkills);
-        missing.removeAll(matched);
-
-        double matchPercentage = 0.0;
-        if (!requiredSkills.isEmpty()) {
-            matchPercentage = ((double) matched.size() / requiredSkills.size()) * 100;
-        }
-
-        SkillMatchResult result = new SkillMatchResult();
-        result.setMatchedSkills(new ArrayList<>(matched));
+        // Missing skills: required skills not in resume
+        Set<String> missing = new HashSet<>(requiredSkills);
+        missing.removeAll(resumeSkills);
         result.setMissingSkills(missing);
-        result.setMatchPercentage(matchPercentage);
+
+        // Extra skills: resume skills not in required
+        Set<String> extra = new HashSet<>(resumeSkills);
+        extra.removeAll(requiredSkills);
+        result.setExtraSkills(extra);
+
+        // Optional: matched preferred skills
+        Set<String> matchedPreferred = new HashSet<>(resumeSkills);
+        matchedPreferred.retainAll(preferredSkills);
+        result.setMatchedPreferredSkills(matchedPreferred);
+
+        // Calculate match percentage
+        int totalRequired = requiredSkills.size();
+        double percentage = totalRequired == 0 ? 100.0
+                : ((double) matched.size() / totalRequired) * 100.0;
+        result.setMatchPercentage(Math.round(percentage * 100.0) / 100.0);
 
         return result;
     }

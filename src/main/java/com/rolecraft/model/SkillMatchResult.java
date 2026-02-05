@@ -1,44 +1,28 @@
 package com.rolecraft.model;
 
-import java.util.List;
+import java.util.Set;
 
 public class SkillMatchResult {
 
-    private List<String> matchedSkills;
-    private List<String> missingSkills;
+    private Set<String> matchedSkills;
+    private Set<String> missingSkills;
+    private Set<String> extraSkills;
+    private Set<String> matchedPreferredSkills;
     private double matchPercentage;
 
-    public SkillMatchResult() {
-    }
+    // Getters & Setters
+    public Set<String> getMatchedSkills() { return matchedSkills; }
+    public void setMatchedSkills(Set<String> matchedSkills) { this.matchedSkills = matchedSkills; }
 
-    public SkillMatchResult(List<String> matchedSkills, List<String> missingSkills, double matchPercentage) 
-    {
-        this.matchedSkills = matchedSkills;
-        this.missingSkills = missingSkills;
-        this.matchPercentage = matchPercentage;
-    }
+    public Set<String> getMissingSkills() { return missingSkills; }
+    public void setMissingSkills(Set<String> missingSkills) { this.missingSkills = missingSkills; }
 
-    public List<String> getMatchedSkills() {
-        return matchedSkills;
-    }
+    public Set<String> getExtraSkills() { return extraSkills; }
+    public void setExtraSkills(Set<String> extraSkills) { this.extraSkills = extraSkills; }
 
-    public void setMatchedSkills(List<String> matchedSkills) {
-        this.matchedSkills = matchedSkills;
-    }
+    public Set<String> getMatchedPreferredSkills() { return matchedPreferredSkills; }
+    public void setMatchedPreferredSkills(Set<String> matchedPreferredSkills) { this.matchedPreferredSkills = matchedPreferredSkills; }
 
-    public List<String> getMissingSkills() {
-        return missingSkills;
-    }
-
-    public void setMissingSkills(List<String> missingSkills) {
-        this.missingSkills = missingSkills;
-    }
-
-    public double getMatchPercentage() {
-        return matchPercentage;
-    }
-
-    public void setMatchPercentage(double matchPercentage) {
-        this.matchPercentage = matchPercentage;
-    }
+    public double getMatchPercentage() { return matchPercentage; }
+    public void setMatchPercentage(double matchPercentage) { this.matchPercentage = matchPercentage; }
 }

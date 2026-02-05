@@ -12,10 +12,12 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\model\TailoredResume.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\parser\ResumeParser.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\prompt\SkillExtractionPrompt.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\SkillMatchResult.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\ATSScoringServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\client\LLMClient.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\advice\GlobalExceptionHandler.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\JobDescriptionController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\MatchingController.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\service\ATSScoringService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\SkillExtractionService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\AIRecommendationService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\impl\AIRecommendationServiceImpl.java
@@ -29,4 +31,5 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\client\MockLLMClient.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\parser\JobDescriptionParser.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\Resume.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\model\ATSScoreResult.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeTailorService.java

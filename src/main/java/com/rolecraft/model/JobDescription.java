@@ -1,5 +1,6 @@
 package com.rolecraft.model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,9 +10,9 @@ public class JobDescription {
     private String title;
     private Set<String> requiredSkills =new LinkedHashSet<>(); // was incorrectly List<String>
 
-    private List<String> preferredSkills;
+    private Set<String> preferredSkills;
     private List<String> responsibilities;
-    private List<String> keywords;
+    private List<String> keywords = new ArrayList<>(); // initialized to avoid null pointer
     private String rawText;
     private List<String> skills;
    
@@ -47,12 +48,12 @@ public class JobDescription {
         this.requiredSkills = new LinkedHashSet<>(extractedSkills);
     }
 
-    public List<String> getPreferredSkills() {
+    public Set<String> getPreferredSkills() {
         return preferredSkills;
     }
 
     public void setPreferredSkills(List<String> preferredSkills) {
-        this.preferredSkills = preferredSkills;
+        this.preferredSkills = new LinkedHashSet<>(preferredSkills);
     }
 
     public List<String> getResponsibilities() {

@@ -53,6 +53,10 @@ public class AIRecommendationServiceImpl implements AIRecommendationService {
 
         String response = llmClient.complete(prompt);
 
+        if(response == null || response.isBlank()) {
+            return List.of("No AI suggestions available.");
+        }
+
         return response.lines()
                 .map(String::trim)
                 .filter(line -> !line.isEmpty())

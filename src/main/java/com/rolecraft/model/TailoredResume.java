@@ -12,6 +12,7 @@ public class TailoredResume {
     private Set<String> experienceBullets = new LinkedHashSet<>();
     private List<String> aiSuggestions;
     private double matchPercentage;
+    private double atsScore;
 
     public TailoredResume() {}
 
@@ -62,5 +63,12 @@ public class TailoredResume {
     }
     public void setAiSuggestions(List<String> aiSuggestions) {
         this.aiSuggestions = aiSuggestions;
+    }
+
+    public double getAtsScore() {
+        return atsScore;
+    }
+    public void setAtsScore(double atsScore) {
+        this.atsScore = atsScore;
     }
 }

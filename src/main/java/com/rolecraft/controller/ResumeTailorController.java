@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ public class ResumeTailorController {
     private final SkillMatchService skillMatchService;
     private final AIRecommendationService aiRecommendationService;
 
+    @Autowired
     public ResumeTailorController(
             ResumeTailorService resumeTailorService,
             SkillMatchService skillMatchService,
@@ -35,40 +37,43 @@ public class ResumeTailorController {
     }
 
     @PostMapping("/tailor")
-    public ResponseEntity<TailoredResume> tailorResume(
-            @RequestBody ResumeTailorRequest request) {
+    public ResponseEntity<TailoredResume> tailorResume(@RequestBody ResumeTailorRequest request) {
 
-        Set<String> requiredSkills =
-                new HashSet<>(request.getJobDescription().getRequiredSkills());
+        try {
+            // 1️⃣ Extract required skills from job description
+            Set<String> requiredSkills = new HashSet<>(request.getJobDescription().getRequiredSkills());
 
-        SkillMatchResult skillMatchResult =
-                skillMatchService.matchSkills(
-                        requiredSkills,
-                        request.getResume().getSkills(),
-                        new HashSet<>()
-                );
+            // 2️⃣ Match skills
+            SkillMatchResult skillMatchResult = skillMatchService.matchSkills(
+                    requiredSkills,
+                    request.getResume().getSkills(),
+                    new HashSet<>()
+            );
 
-        TailoredResume tailoredResume =
-                resumeTailorService.tailorResume(
-                        request.getResume(),
-                        request.getJobDescription(),
-                        skillMatchResult
-                );
+            // 3️⃣ Tailor resume
+            TailoredResume tailoredResume = resumeTailorService.tailorResume(
+                    request.getResume(),
+                    request.getJobDescription(),
+                    skillMatchResult
+            );
 
-        // AI recommendations
-        List<String> suggestions =
-                aiRecommendationService.suggestImprovements(
-                        request.getResume(),
-                        request.getJobDescription(),
-                        skillMatchResult
-                );
+            // 4️⃣ AI recommendations
+            List<String> suggestions = aiRecommendationService.suggestImprovements(
+                    request.getResume(),
+                    request.getJobDescription(),
+                    skillMatchResult
+            );
+            tailoredResume.setAiSuggestions(suggestions);
 
-        tailoredResume.setAiSuggestions(suggestions);
+            return ResponseEntity.ok(tailoredResume);
 
-        return ResponseEntity.ok( resumeTailorService.tailorResume(
-            request.getResume(),
-            request.getJobDescription(),
-            skillMatchResult
-        ));
+        } catch (Exception e) {
+            // Print full stack trace to console for debugging
+            e.printStackTrace();
+
+            // Return generic 500 response with error message
+            return ResponseEntity.status(500)
+                    .body(null);
+        }
     }
 }

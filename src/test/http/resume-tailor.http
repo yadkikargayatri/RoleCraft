@@ -1,0 +1,21 @@
+POST http://localhost:8080/api/resume/tailor
+Content-Type: application/json
+
+{
+  "resume": {
+    "title": "Backend Software Engineer",
+    "summary": "Backend engineer with 3 years of experience in Java, Spring Boot, AWS. Worked on microservices and REST APIs.",
+    "skills": ["Java", "Spring Boot", "AWS", "Microservices"],
+    "experienceBullets": [
+      "Developed REST APIs for order processing system",
+      "Implemented AWS-based microservices",
+      "Optimized database queries for performance"
+    ]
+  },
+  "jobDescription": {
+    "title": "Backend Developer",
+    "requiredSkills": ["Java", "Spring Boot", "AWS"],
+    "preferredSkills": ["Microservices", "Docker", "Kubernetes"],
+    "keywords": ["REST API", "performance", "deployment", "cloud"]
+  }
+}
