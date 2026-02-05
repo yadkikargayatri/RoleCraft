@@ -65,6 +65,10 @@ public class ResumeTailorController {
 
         tailoredResume.setAiSuggestions(suggestions);
 
-        return ResponseEntity.ok(tailoredResume);
+        return ResponseEntity.ok( resumeTailorService.tailorResume(
+            request.getResume(),
+            request.getJobDescription(),
+            skillMatchResult
+        ));
     }
 }

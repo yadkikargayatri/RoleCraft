@@ -8,17 +8,15 @@ public class TailoredResume {
 
     private String title;
     private String summary;
-
     private Set<String> matchedSkills = new LinkedHashSet<>();
     private Set<String> experienceBullets = new LinkedHashSet<>();
     private List<String> aiSuggestions;
-
     private double matchPercentage;
 
-    public TailoredResume() {
-    }
+    public TailoredResume() {}
 
     // ---------- Getters & Setters ----------
+    
 
     public String getTitle() {
         return title;
