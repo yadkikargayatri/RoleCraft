@@ -38,39 +38,39 @@ Role expectations 🤔
 
 High-Level Architecture 🖊️
 
-Client (Web UI)
-   |
-   v
-Resume Tailoring API (Spring Boot)
-   |
-   +-- Resume Parser Service
-   |
-   +-- JD Ingestion Service
-   |
-   +-- Skill & Keyword Extractor
-   |
-   +-- Matching & Scoring Engine
-   |
-   +-- LLM Resume Rewrite Service
-   |
-   +-- Export Service (PDF/DOCX)
+	Client (Web UI)
+  	 |
+   	v
+	Resume Tailoring API (Spring Boot)
+  	 |
+   	+-- Resume Parser Service
+   	|
+   	+-- JD Ingestion Service
+   	|
+   	+-- Skill & Keyword Extractor
+   	|
+   	+-- Matching & Scoring Engine
+   	|
+   	+-- LLM Resume Rewrite Service
+   	|
+   	+-- Export Service (PDF/DOCX)
 
 # Spring Boot Application
 
-This project is now a Spring Boot application. To run the application, use the following command:
+	This project is now a Spring Boot application. To run the application, use the following command:
 
-```bash
-mvn spring-boot:run
-```
+	```bash
+	mvn spring-boot:run
+	```
 
 ## Features ⭐
-- AI-based resume generation
-- ATS optimization
+	- AI-based resume generation
+	- ATS optimization
 
 ## Getting Started 🪜
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Run the application using Maven.
+	1. Clone the repository.
+	2. Navigate to the project directory.
+	3. Run the application using Maven.
 
 ## Requirements 
 - Java 17 or higher
