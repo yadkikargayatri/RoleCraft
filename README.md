@@ -63,15 +63,15 @@ High-Level Architecture 🖊️
 	mvn spring-boot:run
 	```
 
-## Features ⭐
+# Features ⭐
 	- AI-based resume generation
 	- ATS optimization
 
-## Getting Started 🪜
+# Getting Started 🪜
 	1. Clone the repository.
 	2. Navigate to the project directory.
 	3. Run the application using Maven.
 
-## Requirements 
-- Java 17 or higher
-- Maven
+# Requirements 
+	- Java 17 or higher
+	- Maven
