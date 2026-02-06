@@ -10,11 +10,11 @@ public class JobDescription {
     private String title;
     private Set<String> requiredSkills =new LinkedHashSet<>(); // was incorrectly List<String>
 
-    private Set<String> preferredSkills;
+    private Set<String> preferredSkills = new LinkedHashSet<>(); // was incorrectly List<String>
     private List<String> responsibilities;
     private List<String> keywords = new ArrayList<>(); // initialized to avoid null pointer
     private String rawText;
-    private List<String> skills;
+    private List<String> skills = new ArrayList<>(); // Added field to hold extracted skills
    
     public String getRawText() {
         return rawText;
@@ -52,8 +52,8 @@ public class JobDescription {
         return preferredSkills;
     }
 
-    public void setPreferredSkills(List<String> preferredSkills) {
-        this.preferredSkills = new LinkedHashSet<>(preferredSkills);
+    public void setPreferredSkills(List<String> extractedSkills) {
+        this.preferredSkills = new LinkedHashSet<>(extractedSkills);
     }
 
     public List<String> getResponsibilities() {

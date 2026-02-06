@@ -17,7 +17,7 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
         JobDescription jd = new JobDescription();
         jd.setRawText(jobDescription);
         List<String> skills = extractSkills(jobDescription);
-        jd.setSkills(skills);
+        jd.setSkills(skills); // Store skills as a List (no duplicates since extractSkills returns a list with no duplicates)
 
         return jd;
     }

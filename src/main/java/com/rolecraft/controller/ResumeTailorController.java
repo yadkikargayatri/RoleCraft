@@ -39,25 +39,25 @@ public class ResumeTailorController {
     @PostMapping("/tailor")
     public ResponseEntity<TailoredResume> tailorResume(@RequestBody ResumeTailorRequest request) {
 
-        try {
-            // 1️⃣ Extract required skills from job description
+       // try {
+            // Extract required skills from job description
             Set<String> requiredSkills = new HashSet<>(request.getJobDescription().getRequiredSkills());
 
-            // 2️⃣ Match skills
+            // Match skills
             SkillMatchResult skillMatchResult = skillMatchService.matchSkills(
                     requiredSkills,
                     request.getResume().getSkills(),
                     new HashSet<>()
             );
 
-            // 3️⃣ Tailor resume
+            // Tailor resume
             TailoredResume tailoredResume = resumeTailorService.tailorResume(
                     request.getResume(),
                     request.getJobDescription(),
                     skillMatchResult
             );
 
-            // 4️⃣ AI recommendations
+            //  AI recommendations
             List<String> suggestions = aiRecommendationService.suggestImprovements(
                     request.getResume(),
                     request.getJobDescription(),
@@ -67,13 +67,13 @@ public class ResumeTailorController {
 
             return ResponseEntity.ok(tailoredResume);
 
-        } catch (Exception e) {
-            // Print full stack trace to console for debugging
-            e.printStackTrace();
+        // } catch (Exception e) {
+        //     // Print full stack trace to console for debugging
+        //     e.printStackTrace();
 
-            // Return generic 500 response with error message
-            return ResponseEntity.status(500)
-                    .body(null);
-        }
+        //     // Return generic 500 response with error message
+        //     return ResponseEntity.status(500)
+        //             .body(null);
+        // }
     }
 }
