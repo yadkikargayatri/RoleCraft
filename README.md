@@ -41,7 +41,6 @@ High-Level Architecture 🖊️
 
 	Client (Web UI)
   	 |
-   	v
 	Resume Tailoring API (Spring Boot)
   	 |
    	+-- Resume Parser Service
