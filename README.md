@@ -55,7 +55,7 @@ High-Level Architecture 🖊️
    	|
    	+-- Export Service (PDF/DOCX)
 
-# Spring Boot Application
+Spring Boot Application
 
 	This project is now a Spring Boot application. To run the application, use the following command:
 
@@ -63,15 +63,18 @@ High-Level Architecture 🖊️
 	mvn spring-boot:run
 	```
 
-# Features ⭐
+ Features ⭐
+ 
 	- AI-based resume generation
 	- ATS optimization
 
-# Getting Started 🪜
+ Getting Started 🪜
+ 
 	1. Clone the repository.
 	2. Navigate to the project directory.
 	3. Run the application using Maven.
 
-# Requirements 
+# Requirements
+
 	- Java 17 or higher
 	- Maven
