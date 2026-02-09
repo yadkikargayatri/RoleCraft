@@ -1,4 +1,5 @@
 # RoleCraft 👩‍💻📄
+
 AI based resume powering system
 
 Problem Statement 📄
@@ -74,7 +75,7 @@ Spring Boot Application
 	2. Navigate to the project directory.
 	3. Run the application using Maven.
 
-# Requirements
+Requirements
 
 	- Java 17 or higher
 	- Maven
