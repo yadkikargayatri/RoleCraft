@@ -18,6 +18,8 @@ import com.rolecraft.model.TailoredResume;
 import com.rolecraft.service.ResumeTailorService;
 import com.rolecraft.service.SkillMatchService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/resume")
 public class ResumeTailorController {
@@ -37,7 +39,7 @@ public class ResumeTailorController {
     }
 
     @PostMapping("/tailor")
-    public ResponseEntity<TailoredResume> tailorResume(@RequestBody ResumeTailorRequest request) {
+    public ResponseEntity<TailoredResume> tailorResume(@Valid @RequestBody ResumeTailorRequest request) {
         
 
        // try {

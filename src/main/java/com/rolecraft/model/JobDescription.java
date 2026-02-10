@@ -5,10 +5,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 public class JobDescription {
 
+    @NotBlank(message = "Job title must not be blank")
     private String title;
 
     @NotEmpty(message = "Required skills must not be blank")

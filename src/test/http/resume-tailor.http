@@ -1,16 +1,15 @@
-POST http://localhost:8080/api/resume/tailor
-Content-Type: application/json
-
-{
-  "resume": {
-    "title": "",
-    "summary": "Java dev",
-    "skills": ["Java"]
-  },
-  "jobDescription": {
-    "title": "Backend Engineer",
-    "requiredSkills": []
-  }
-}
-
-
+curl -X POST http://localhost:8080/api/resume/tailor \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resume": {
+      "title": "Backend Engineer",
+      "summary": "Java backend developer",
+      "skills": ["Java", "Spring Boot"]
+    },
+    "jobDescription": {
+      "title": "Backend Engineer",
+      "requiredSkills": ["Java", "Spring Boot"],
+      "preferredSkills": ["AWS"],
+      "keywords": ["microservices"]
+    }
+  }'
