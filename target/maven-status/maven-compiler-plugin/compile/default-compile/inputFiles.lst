@@ -26,6 +26,7 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescription.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\exception\InvalidResumeException.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\SkillMatchRequest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescriptionRequest.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\dto\ResumeRequest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\ResumeTailorController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\RoleCraftApplication.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeServiceImpl.java

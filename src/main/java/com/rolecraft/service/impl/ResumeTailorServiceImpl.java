@@ -33,10 +33,7 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
     // PUBLIC API
     // =============================
     @Override
-    public TailoredResume tailorResume(
-            Resume resume,
-            JobDescription jd,
-            SkillMatchResult skillMatchResult) {
+    public TailoredResume tailorResume(Resume resume, JobDescription jd) {
 
         if (resume == null || jd == null) {
             throw new IllegalArgumentException("Resume and JobDescription must not be null");
@@ -51,7 +48,7 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
         validateJobDescription(jd);
 
         // Skill matching
-        skillMatchResult = skillMatchService.matchSkills(
+        SkillMatchResult skillMatchResult = skillMatchService.matchSkills(
                 requiredSkills,
                 resumeSkills,
                 new HashSet<>()
@@ -106,45 +103,40 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
         double preferredWeight = 0.3;
         double experienceWeight = 0.2;
 
-      
-        long matchedRequired =
-                requiredSkills.stream()
-                        .filter(resumeSkills::contains)
-                        .count();
+        // Required skills
+        long matchedRequired = requiredSkills.stream()
+                .filter(resumeSkills::contains)
+                .count();
 
-        double requiredScore =
-                requiredSkills.isEmpty()
-                        ? 0
-                        : ((double) matchedRequired / requiredSkills.size()) * requiredWeight;
+        double requiredScore = requiredSkills.isEmpty()
+                ? 0
+                : ((double) matchedRequired / requiredSkills.size()) * requiredWeight;
 
-       
-        long matchedPreferred =
-                preferredSkills.stream()
-                        .filter(resumeSkills::contains)
-                        .count();
+        // Preferred skills
+        long matchedPreferred = preferredSkills.stream()
+                .filter(resumeSkills::contains)
+                .count();
 
-        double preferredScore =
-                preferredSkills.isEmpty()
-                        ? 0
-                        : ((double) matchedPreferred / preferredSkills.size()) * preferredWeight;
+        double preferredScore = preferredSkills.isEmpty()
+                ? 0
+                : ((double) matchedPreferred / preferredSkills.size()) * preferredWeight;
 
         // Experience keywords
         String summary = safeString(resume.getSummary()).toLowerCase();
+        long matchedKeywords = keywords.stream()
+                .filter(k -> summary.contains(k.toLowerCase()))
+                .count();
 
-        long matchedKeywords =
-                keywords.stream()
-                        .filter(k -> summary.contains(k.toLowerCase()))
-                        .count();
-
-        double experienceScore =
-                keywords.isEmpty()
-                        ? 0
-                        : ((double) matchedKeywords / keywords.size()) * experienceWeight;
+        double experienceScore = keywords.isEmpty()
+                ? 0
+                : ((double) matchedKeywords / keywords.size()) * experienceWeight;
 
         return (requiredScore + preferredScore + experienceScore) * 100;
     }
 
-   
+    // =============================
+    // SAFE UTILITIES
+    // =============================
     private Set<String> safeSet(Set<String> input) {
         return input == null ? Set.of() : input;
     }
@@ -157,33 +149,33 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
         return input == null ? "" : input;
     }
 
-
-
+    // =============================
+    // VALIDATION
+    // =============================
     private void validateResume(Resume resume) {
-    if (resume == null) {
-        throw new InvalidResumeException("Resume cannot be null");
+        if (resume == null) {
+            throw new InvalidResumeException("Resume must not be null");
+        }
+        if (resume.getTitle() == null || resume.getTitle().isBlank()) {
+            throw new InvalidResumeException("Resume title is required");
+        }
+        if (resume.getSummary() == null || resume.getSummary().isBlank()) {
+            throw new InvalidResumeException("Resume summary is required");
+        }
+        if (resume.getSkills() == null || resume.getSkills().isEmpty()) {
+            throw new InvalidResumeException("Resume must contain at least one skill");
+        }
     }
-    if (resume.getTitle() == null || resume.getTitle().isBlank()) {
-        throw new InvalidResumeException("Resume title is required");
-    }
-    if (resume.getSummary() == null || resume.getSummary().isBlank()) {
-        throw new InvalidResumeException("Resume summary is required");
-    }
-    if (resume.getSkills() == null || resume.getSkills().isEmpty()) {
-        throw new InvalidResumeException("Resume must contain at least one skill");
-    }
-}
 
     private void validateJobDescription(JobDescription jd) {
-    if (jd == null) {
-        throw new InvalidJobDescriptionException("Job description cannot be null");
+        if (jd == null) {
+            throw new InvalidJobDescriptionException("Job description must not be null");
+        }
+        if (jd.getTitle() == null || jd.getTitle().isBlank()) {
+            throw new InvalidJobDescriptionException("Job title is required");
+        }
+        if (jd.getRequiredSkills() == null || jd.getRequiredSkills().isEmpty()) {
+            throw new InvalidJobDescriptionException("Job description must contain required skills");
+        }
     }
-    if (jd.getTitle() == null || jd.getTitle().isBlank()) {
-        throw new InvalidJobDescriptionException("Job title is required");
-    }
-    if (jd.getRequiredSkills() == null || jd.getRequiredSkills().isEmpty()) {
-        throw new InvalidJobDescriptionException("At least one required skill must be provided");
-    }
-}
-
 }

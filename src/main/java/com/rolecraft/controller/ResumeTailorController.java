@@ -38,6 +38,7 @@ public class ResumeTailorController {
 
     @PostMapping("/tailor")
     public ResponseEntity<TailoredResume> tailorResume(@RequestBody ResumeTailorRequest request) {
+        
 
        // try {
             // Extract required skills from job description
@@ -53,8 +54,7 @@ public class ResumeTailorController {
             // Tailor resume
             TailoredResume tailoredResume = resumeTailorService.tailorResume(
                     request.getResume(),
-                    request.getJobDescription(),
-                    skillMatchResult
+                    request.getJobDescription()
             );
 
             //  AI recommendations

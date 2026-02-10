@@ -1,12 +1,24 @@
 package com.rolecraft.model;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class Resume {
 
+    @NotBlank(message = "Resume title cannot be empty")
     private String title;
+
+    @NotBlank(message = "Resume summary cannot be empty")
+    @Size(max = 500, message = "Resume summary must not exceed 500 characters")
     private String summary;
+
+    @NotEmpty(message = "Resume skills must not be empty")
     private Set<String> skills;
-    private Set<String> experienceBullets;
+
+    @NotEmpty(message = "Resume experience bullets must not be empty")
+    private Set<@NotBlank String> experienceBullets;
 
     public String getSummary() {
         return summary;

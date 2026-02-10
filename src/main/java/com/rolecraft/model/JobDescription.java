@@ -5,9 +5,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class JobDescription {
 
     private String title;
+
+    @NotEmpty(message = "Required skills must not be blank")
     private Set<String> requiredSkills =new LinkedHashSet<>(); // was incorrectly List<String>
 
     private Set<String> preferredSkills = new LinkedHashSet<>(); // was incorrectly List<String>

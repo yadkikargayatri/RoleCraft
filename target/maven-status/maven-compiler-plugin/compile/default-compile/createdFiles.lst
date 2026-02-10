@@ -31,5 +31,6 @@ com\rolecraft\model\Resume.class
 com\rolecraft\service\ResumeTailorService.class
 com\rolecraft\service\JobDescriptionService.class
 com\rolecraft\controller\ResumeController.class
+com\rolecraft\dto\ResumeRequest.class
 com\rolecraft\parser\ResumeParser.class
 com\rolecraft\ai\prompt\SkillExtractionPrompt.class

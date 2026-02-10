@@ -4,9 +4,16 @@ import com.rolecraft.model.JobDescription;
 import com.rolecraft.model.Resume;
 import com.rolecraft.model.SkillMatchResult;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 public class ResumeTailorRequest {
 
+    @NotNull(message = "Resume cannot be null")
+    @Valid
     private Resume resume;
+    @NotNull(message = "Job description cannot be null")
+    @Valid
     private JobDescription jobDescription;
     private SkillMatchResult skillMatchResult;
 
