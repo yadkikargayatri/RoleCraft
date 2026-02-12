@@ -15,6 +15,9 @@ import com.rolecraft.model.JobDescription;
 import com.rolecraft.model.Resume;
 import com.rolecraft.model.SkillMatchResult;
 import com.rolecraft.model.TailoredResume;
+import com.rolecraft.repository.JobDescriptionRepository;
+import com.rolecraft.repository.ResumeRepository;
+import com.rolecraft.repository.TailoredResumeRepository;
 import com.rolecraft.service.ResumeTailorService;
 import com.rolecraft.service.SkillMatchService;
 
@@ -23,6 +26,10 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
 
     private final SkillMatchService skillMatchService;
     private final AIRecommendationService aiRecommendationService;
+    private final ResumeRepository resumeRepository;
+    private final JobDescriptionRepository jobDescriptionRepository;
+    private final TailoredResumeRepository tailoredResumeRepository;
+    
     
     private static final Logger logger =
         LoggerFactory.getLogger(ResumeTailorServiceImpl.class);
@@ -30,8 +37,14 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
 
 
     public ResumeTailorServiceImpl(
+            ResumeRepository resumeRepository,
+            JobDescriptionRepository jobDescriptionRepository,
+            TailoredResumeRepository tailoredResumeRepository,
             SkillMatchService skillMatchService,
             AIRecommendationService aiRecommendationService) {
+        this.resumeRepository = resumeRepository;
+        this.jobDescriptionRepository = jobDescriptionRepository;
+        this.tailoredResumeRepository = tailoredResumeRepository;
         this.skillMatchService = skillMatchService;
         this.aiRecommendationService = aiRecommendationService;
     }
@@ -40,14 +53,14 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
     // PUBLIC API
     // =============================
     @Override
-public TailoredResume tailorResume(
-        Resume resume,
-        JobDescription jd) {
+public TailoredResume tailorResume(Resume resume,JobDescription jd) {
 
     logger.info("Starting resume tailoring for job: {}", jd.getTitle());
 
     validateResume(resume);
     validateJobDescription(jd);
+    Resume savedResume = resumeRepository.save(resume);
+    JobDescription savedJD = jobDescriptionRepository.save(jd);
 
     Set<String> resumeSkills = safeSet(resume.getSkills());
     Set<String> requiredSkills = safeSet(jd.getRequiredSkills());
@@ -70,6 +83,8 @@ public TailoredResume tailorResume(
 
     // Build Tailored Resume
     TailoredResume tailoredResume = new TailoredResume();
+    tailoredResume.setResume(savedResume);
+    tailoredResume.setJobDescription(savedJD);
     tailoredResume.setTitle(safeString(resume.getTitle()));
     tailoredResume.setSummary(safeString(resume.getSummary()));
     tailoredResume.setMatchedSkills(skillMatchResult.getMatchedSkills());
@@ -97,7 +112,7 @@ public TailoredResume tailorResume(
 
     logger.info("Resume tailoring completed successfully.");
 
-    return tailoredResume;
+    return tailoredResumeRepository.save(tailoredResume);
 }
 
 

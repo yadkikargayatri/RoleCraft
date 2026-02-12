@@ -4,11 +4,14 @@ import com.rolecraft.model.JobDescription;
 import com.rolecraft.model.Resume;
 import com.rolecraft.model.SkillMatchResult;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
+
 public class ResumeTailorRequest {
 
+    @Schema(description = "Resume details")
     @NotNull(message = "Resume cannot be null")
     @Valid
     private Resume resume;
@@ -25,6 +28,7 @@ public class ResumeTailorRequest {
         this.resume = resume;
     }
 
+    @Schema(description = "Job description details")
     public JobDescription getJobDescription() {
         return jobDescription;
     }

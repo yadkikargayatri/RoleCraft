@@ -1,7 +1,16 @@
-spring.jackson.serialization.indent_output=true
-spring.jackson.date-format=yyyy-MM-dd'T'HH:mm:ss.SSSZ
-spring.jackson.default-property-inclusion=non_null
+spring:
+  datasource:
+    url: jdbc:h2:mem:rolecraft
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
 
-server.error.include-message=always
-server.error.include-binding-errors=always
-server.error.include-stacktrace=always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true

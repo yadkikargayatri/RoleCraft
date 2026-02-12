@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.rolecraft.controller.dto.ApiError;
-import com.rolecraft.controller.dto.ApiResponse;
+import com.rolecraft.controller.dto.ApiResponseWrapper;
 import com.rolecraft.exception.InvalidJobDescriptionException;
 import com.rolecraft.exception.InvalidResumeException;
 
@@ -15,7 +15,7 @@ import com.rolecraft.exception.InvalidResumeException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidResumeException.class)
-    public ResponseEntity<ApiResponse<Object>> handleInvalidResume(
+    public ResponseEntity<ApiResponseWrapper<Object>> handleInvalidResume(
             InvalidResumeException ex) {
 
         ApiError error = new ApiError(
@@ -26,11 +26,11 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.failure(error));
+                .body(ApiResponseWrapper.failure(error));
     }
 
     @ExceptionHandler(InvalidJobDescriptionException.class)
-    public ResponseEntity<ApiResponse<Object>> handleInvalidJobDescription(
+    public ResponseEntity<ApiResponseWrapper<Object>> handleInvalidJobDescription(
             InvalidJobDescriptionException ex) {
 
         ApiError error = new ApiError(
@@ -41,12 +41,12 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.failure(error));
+                .body(ApiResponseWrapper.failure(error));
     }
 
     // DTO Validation errors (@Valid)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Object>> handleValidation(
+    public ResponseEntity<ApiResponseWrapper<Object>> handleValidation(
             MethodArgumentNotValidException ex) {
 
         String message = ex.getBindingResult()
@@ -64,12 +64,12 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.failure(error));
+                .body(ApiResponseWrapper.failure(error));
     }
 
     // Catch-all
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Object>> handleGeneric(Exception ex) {
+    public ResponseEntity<ApiResponseWrapper<Object>> handleGeneric(Exception ex) {
 
         ApiError error = new ApiError(
                 "INTERNAL_SERVER_ERROR",
@@ -79,6 +79,6 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.failure(error));
+                .body(ApiResponseWrapper.failure(error));
     }
 }

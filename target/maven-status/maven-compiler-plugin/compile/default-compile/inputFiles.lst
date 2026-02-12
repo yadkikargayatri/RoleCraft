@@ -1,10 +1,10 @@
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\ResumeController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\JobDescriptionService.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\repository\JobDescriptionRepository.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\SkillMatchService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\ResumeTailorServiceImplTest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\exception\InvalidJobDescriptionException.java
-C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ApiResponse.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\ResumeTailorServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\impl\SkillExtractionServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ResumeTailorRequest.java
@@ -12,8 +12,10 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\JobDescriptionServiceI
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\SkillMatchServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\TailoredResume.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\parser\ResumeParser.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ApiResponseWrapper.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\prompt\SkillExtractionPrompt.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\SkillMatchResult.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\config\OpenApiConfig.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\ATSScoringServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\client\LLMClient.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\advice\GlobalExceptionHandler.java
@@ -29,9 +31,11 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\exception\InvalidResumeException.ja
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\SkillMatchRequest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescriptionRequest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\ResumeTailorController.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\repository\ResumeRepository.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\RoleCraftApplication.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\client\MockLLMClient.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\repository\TailoredResumeRepository.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\parser\JobDescriptionParser.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\Resume.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\ATSScoreResult.java

@@ -4,15 +4,56 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+
+@Entity
+@Table(name = "tailored_resumes")
 public class TailoredResume {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String title;
+
+    @Column(length = 2000)
     private String summary;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tailored_matched_skills", joinColumns = @JoinColumn(name = "tailored_id"))
+    @Column(name = "skill")
     private Set<String> matchedSkills = new LinkedHashSet<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tailored_experience", joinColumns = @JoinColumn(name = "tailored_id"))
+    @Column(name = "bullet")
     private Set<String> experienceBullets = new LinkedHashSet<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tailored_ai_suggestions", joinColumns = @JoinColumn(name = "tailored_id"))
+    @Column(name = "suggestion")
     private List<String> aiSuggestions;
     private double matchPercentage;
     private double atsScore;
+
+    @ManyToOne
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
+
+    @ManyToOne
+    @JoinColumn(name = "jd_id")
+    private JobDescription jobDescription;
 
     public TailoredResume() {}
 
@@ -70,5 +111,17 @@ public class TailoredResume {
     }
     public void setAtsScore(double atsScore) {
         this.atsScore = atsScore;
+    }
+    public Resume getResume() {
+        return resume;
+    }   
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+    public JobDescription getJobDescription() {
+        return jobDescription;
+    }
+    public void setJobDescription(JobDescription jobDescription) {
+        this.jobDescription = jobDescription;
     }
 }

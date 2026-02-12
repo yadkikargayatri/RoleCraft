@@ -9,9 +9,11 @@ com\rolecraft\controller\JobDescriptionController.class
 com\rolecraft\controller\dto\SkillMatchRequest.class
 com\rolecraft\service\ResumeServiceImpl.class
 com\rolecraft\controller\dto\ResumeRequest.class
+com\rolecraft\repository\JobDescriptionRepository.class
 com\rolecraft\controller\ResumeTailorController.class
 com\rolecraft\model\SkillMatchResult.class
 com\rolecraft\exception\InvalidJobDescriptionException.class
+com\rolecraft\controller\dto\ApiResponseWrapper.class
 com\rolecraft\service\impl\ATSScoringServiceImpl.class
 com\rolecraft\RoleCraftApplication.class
 com\rolecraft\model\JobDescriptionRequest.class
@@ -19,6 +21,7 @@ com\rolecraft\ai\service\impl\SkillExtractionServiceImpl.class
 com\rolecraft\ai\service\impl\AIRecommendationServiceImpl.class
 com\rolecraft\parser\JobDescriptionParser.class
 com\rolecraft\controller\advice\GlobalExceptionHandler.class
+com\rolecraft\repository\TailoredResumeRepository.class
 com\rolecraft\service\ATSScoringService.class
 com\rolecraft\exception\InvalidResumeException.class
 com\rolecraft\service\impl\SkillMatchServiceImpl.class
@@ -27,12 +30,13 @@ com\rolecraft\controller\MatchingController.class
 com\rolecraft\model\TailoredResume.class
 com\rolecraft\service\SkillMatchService.class
 com\rolecraft\ai\client\LLMClient.class
-com\rolecraft\controller\dto\ApiResponse.class
 com\rolecraft\ai\service\AIRecommendationService.class
 com\rolecraft\service\impl\JobDescriptionServiceImpl.class
+com\rolecraft\config\OpenApiConfig.class
 com\rolecraft\model\Resume.class
 com\rolecraft\service\ResumeTailorService.class
 com\rolecraft\service\JobDescriptionService.class
 com\rolecraft\controller\ResumeController.class
+com\rolecraft\repository\ResumeRepository.class
 com\rolecraft\parser\ResumeParser.class
 com\rolecraft\ai\prompt\SkillExtractionPrompt.class
