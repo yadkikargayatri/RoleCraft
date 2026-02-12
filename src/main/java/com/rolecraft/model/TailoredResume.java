@@ -44,15 +44,16 @@ public class TailoredResume {
     @CollectionTable(name = "tailored_ai_suggestions", joinColumns = @JoinColumn(name = "tailored_id"))
     @Column(name = "suggestion")
     private List<String> aiSuggestions;
+    
     private double matchPercentage;
     private double atsScore;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")
     private Resume resume;
 
-    @ManyToOne
-    @JoinColumn(name = "jd_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_description_id")
     private JobDescription jobDescription;
 
     public TailoredResume() {}

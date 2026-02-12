@@ -1,6 +1,8 @@
 package com.rolecraft.model;
+import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -10,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -43,6 +46,9 @@ public class Resume {
     @Column(name = "bullet")
     @NotEmpty(message = "Resume experience bullets must not be empty")
     private Set<@NotBlank String> experienceBullets;
+
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
+    private List<TailoredResume> tailoredResumes;
 
     public String getSummary() {
         return summary;

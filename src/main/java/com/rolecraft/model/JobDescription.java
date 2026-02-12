@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -14,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -48,6 +50,9 @@ public class JobDescription {
 
     private String rawText;
     private List<String> skills = new ArrayList<>(); // Added field to hold extracted skills
+
+     @OneToMany(mappedBy = "jobDescription", cascade = CascadeType.ALL)
+    private List<TailoredResume> tailoredResumes;
    
     public String getRawText() {
         return rawText;

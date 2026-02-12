@@ -21,6 +21,8 @@ import com.rolecraft.repository.TailoredResumeRepository;
 import com.rolecraft.service.ResumeTailorService;
 import com.rolecraft.service.SkillMatchService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ResumeTailorServiceImpl implements ResumeTailorService {
 
@@ -52,6 +54,7 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
     // =============================
     // PUBLIC API
     // =============================
+    @Transactional
     @Override
 public TailoredResume tailorResume(Resume resume,JobDescription jd) {
 
@@ -59,8 +62,8 @@ public TailoredResume tailorResume(Resume resume,JobDescription jd) {
 
     validateResume(resume);
     validateJobDescription(jd);
-    Resume savedResume = resumeRepository.save(resume);
-    JobDescription savedJD = jobDescriptionRepository.save(jd);
+    Resume savedResume = resumeRepository.save(resume); // save resume first to ensure it has an ID for relationships
+    JobDescription savedJD = jobDescriptionRepository.save(jd); // save JD to ensure it has an ID for relationships
 
     Set<String> resumeSkills = safeSet(resume.getSkills());
     Set<String> requiredSkills = safeSet(jd.getRequiredSkills());
@@ -82,7 +85,7 @@ public TailoredResume tailorResume(Resume resume,JobDescription jd) {
             skillMatchResult.getMatchedSkills().size());
 
     // Build Tailored Resume
-    TailoredResume tailoredResume = new TailoredResume();
+    TailoredResume tailoredResume = new TailoredResume(); // create tailored resume
     tailoredResume.setResume(savedResume);
     tailoredResume.setJobDescription(savedJD);
     tailoredResume.setTitle(safeString(resume.getTitle()));
