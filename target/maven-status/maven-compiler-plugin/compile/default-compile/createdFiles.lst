@@ -1,6 +1,7 @@
 com\rolecraft\controller\dto\ResumeTailorRequest.class
 com\rolecraft\service\ResumeService.class
 com\rolecraft\ai\client\MockLLMClient.class
+com\rolecraft\controller\dto\ApiError.class
 com\rolecraft\model\JobDescription.class
 com\rolecraft\service\impl\ResumeTailorServiceImpl.class
 com\rolecraft\ai\service\SkillExtractionService.class
@@ -26,6 +27,7 @@ com\rolecraft\controller\MatchingController.class
 com\rolecraft\model\TailoredResume.class
 com\rolecraft\service\SkillMatchService.class
 com\rolecraft\ai\client\LLMClient.class
+com\rolecraft\controller\dto\ApiResponse.class
 com\rolecraft\ai\service\AIRecommendationService.class
 com\rolecraft\service\impl\JobDescriptionServiceImpl.class
 com\rolecraft\model\Resume.class
