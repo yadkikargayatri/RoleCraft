@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.rolecraft.ai.service.AIRecommendationService;
@@ -21,6 +23,11 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
 
     private final SkillMatchService skillMatchService;
     private final AIRecommendationService aiRecommendationService;
+    
+    private static final Logger logger =
+        LoggerFactory.getLogger(ResumeTailorServiceImpl.class);
+
+
 
     public ResumeTailorServiceImpl(
             SkillMatchService skillMatchService,
@@ -33,50 +40,66 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
     // PUBLIC API
     // =============================
     @Override
-    public TailoredResume tailorResume(Resume resume, JobDescription jd) {
+public TailoredResume tailorResume(
+        Resume resume,
+        JobDescription jd) {
 
-        if (resume == null || jd == null) {
-            throw new IllegalArgumentException("Resume and JobDescription must not be null");
-        }
+    logger.info("Starting resume tailoring for job: {}", jd.getTitle());
 
-        Set<String> resumeSkills = safeSet(resume.getSkills());
-        Set<String> requiredSkills = safeSet(jd.getRequiredSkills());
-        Set<String> preferredSkills = safeSet(jd.getPreferredSkills());
-        List<String> keywords = safeList(jd.getKeywords());
+    validateResume(resume);
+    validateJobDescription(jd);
 
-        validateResume(resume);
-        validateJobDescription(jd);
+    Set<String> resumeSkills = safeSet(resume.getSkills());
+    Set<String> requiredSkills = safeSet(jd.getRequiredSkills());
+    Set<String> preferredSkills = safeSet(jd.getPreferredSkills());
+    List<String> keywords = safeList(jd.getKeywords());
 
-        // Skill matching
-        SkillMatchResult skillMatchResult = skillMatchService.matchSkills(
-                requiredSkills,
-                resumeSkills,
-                new HashSet<>()
-        );
+    logger.debug("Resume skills count: {}", resumeSkills.size());
+    logger.debug("Required skills count: {}", requiredSkills.size());
+    logger.debug("Preferred skills count: {}", preferredSkills.size());
 
-        // Build tailored resume
-        TailoredResume tailoredResume = new TailoredResume();
-        tailoredResume.setTitle(safeString(resume.getTitle()));
-        tailoredResume.setSummary(safeString(resume.getSummary()));
-        tailoredResume.setMatchedSkills(skillMatchResult.getMatchedSkills());
-        tailoredResume.setExperienceBullets(safeSet(resume.getExperienceBullets()));
+    // Skill Matching
+    SkillMatchResult skillMatchResult = skillMatchService.matchSkills(
+            requiredSkills,
+            resumeSkills,
+            new HashSet<>()
+    );
 
-        // Scores
-        tailoredResume.setMatchPercentage(
-                calculateMatchPercentage(skillMatchResult, requiredSkills, preferredSkills)
-        );
+    logger.debug("Matched skills count: {}",
+            skillMatchResult.getMatchedSkills().size());
 
-        tailoredResume.setAtsScore(
-                calculateATSScore(resumeSkills, keywords, requiredSkills, preferredSkills, resume)
-        );
+    // Build Tailored Resume
+    TailoredResume tailoredResume = new TailoredResume();
+    tailoredResume.setTitle(safeString(resume.getTitle()));
+    tailoredResume.setSummary(safeString(resume.getSummary()));
+    tailoredResume.setMatchedSkills(skillMatchResult.getMatchedSkills());
+    tailoredResume.setExperienceBullets(safeSet(resume.getExperienceBullets()));
 
-        // AI suggestions
-        tailoredResume.setAiSuggestions(
-                aiRecommendationService.suggestImprovements(resume, jd, skillMatchResult)
-        );
+    double matchPercentage =
+            calculateMatchPercentage(skillMatchResult, requiredSkills, preferredSkills);
 
-        return tailoredResume;
-    }
+    double atsScore =
+            calculateATSScore(resumeSkills, keywords, requiredSkills, preferredSkills, resume);
+
+    tailoredResume.setMatchPercentage(matchPercentage);
+    tailoredResume.setAtsScore(atsScore);
+
+    logger.info("Match percentage calculated: {}%", matchPercentage);
+    logger.info("ATS score calculated: {}%", atsScore);
+
+    // AI Suggestions
+    List<String> suggestions =
+            aiRecommendationService.suggestImprovements(resume, jd, skillMatchResult);
+
+    tailoredResume.setAiSuggestions(suggestions);
+
+    logger.debug("AI suggestions generated: {}", suggestions.size());
+
+    logger.info("Resume tailoring completed successfully.");
+
+    return tailoredResume;
+}
+
 
     // =============================
     // SCORE CALCULATIONS

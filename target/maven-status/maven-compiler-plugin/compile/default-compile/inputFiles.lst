@@ -4,6 +4,7 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\SkillMatchService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\ResumeTailorServiceImplTest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\exception\InvalidJobDescriptionException.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ApiResponse.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\impl\ResumeTailorServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\impl\SkillExtractionServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ResumeTailorRequest.java
@@ -21,6 +22,7 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\controller\MatchingController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ATSScoringService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\SkillExtractionService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\AIRecommendationService.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ApiError.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\service\impl\AIRecommendationServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescription.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\exception\InvalidResumeException.java

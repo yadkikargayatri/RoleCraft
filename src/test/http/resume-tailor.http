@@ -1,15 +1,25 @@
-curl -X POST http://localhost:8080/api/resume/tailor \
-  -H "Content-Type: application/json" \
-  -d '{
-    "resume": {
-      "title": "Backend Engineer",
-      "summary": "Java backend developer",
-      "skills": ["Java", "Spring Boot"]
-    },
-    "jobDescription": {
-      "title": "Backend Engineer",
-      "requiredSkills": ["Java", "Spring Boot"],
-      "preferredSkills": ["AWS"],
-      "keywords": ["microservices"]
-    }
-  }'
+POST http://localhost:8080/api/resume/tailor
+Content-Type: application/json
+
+{
+  "resume": {
+    "title": "Backend Engineer",
+    "summary": "Java Spring Boot AWS microservices developer",
+    "skills": ["Java", "Spring Boot", "AWS"],
+    "experienceBullets": [
+      "Developed REST APIs using Spring Boot",
+      "Deployed applications on AWS EC2",
+      "Implemented CI/CD pipelines"
+    ]
+  },
+  "jobDescription": {
+    "title": "Backend Software Engineer",
+    "requiredSkills": ["Java", "Spring Boot", "AWS"],
+    "preferredSkills": ["Docker"],
+    "keywords": ["microservices", "cloud"]
+  }
+}
+
+
+
+
