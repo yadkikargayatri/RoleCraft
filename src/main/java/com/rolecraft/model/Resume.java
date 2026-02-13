@@ -50,6 +50,13 @@ public class Resume {
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
     private List<TailoredResume> tailoredResumes;
 
+    public Long getId() {
+        return id;
+    }
+    // public void setId(Long id) {
+    //     this.id = id;
+    // }
+
     public String getSummary() {
         return summary;
     }

@@ -1,8 +1,11 @@
 package com.rolecraft.model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -43,23 +46,31 @@ public class TailoredResume {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tailored_ai_suggestions", joinColumns = @JoinColumn(name = "tailored_id"))
     @Column(name = "suggestion")
-    private List<String> aiSuggestions;
+    private List<String> aiSuggestions = new ArrayList<>();
     
     private double matchPercentage;
     private double atsScore;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")
+    @JsonIgnore
     private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_description_id")
+    @JsonIgnore
     private JobDescription jobDescription;
 
     public TailoredResume() {}
 
     // ---------- Getters & Setters ----------
     
+    public Long getId() {
+        return id;
+    }
+    // public void setId(Long id) {
+    //     this.id = id;
+    // }
 
     public String getTitle() {
         return title;

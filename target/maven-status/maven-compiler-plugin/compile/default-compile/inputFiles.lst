@@ -33,6 +33,7 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\model\JobDescriptionRequest.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\controller\ResumeTailorController.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\repository\ResumeRepository.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\RoleCraftApplication.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeApplicationService.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\client\MockLLMClient.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\repository\TailoredResumeRepository.java

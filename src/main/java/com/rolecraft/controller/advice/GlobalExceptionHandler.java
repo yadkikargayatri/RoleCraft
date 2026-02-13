@@ -71,6 +71,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponseWrapper<Object>> handleGeneric(Exception ex) {
 
+   ex.printStackTrace(); // Log the exception for debugging (temporary)
+
         ApiError error = new ApiError(
                 "INTERNAL_SERVER_ERROR",
                 "Unexpected error occurred",

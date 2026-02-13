@@ -1,5 +1,6 @@
 package com.rolecraft.service.impl;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -77,8 +78,10 @@ public TailoredResume tailorResume(Resume resume, JobDescription jd) {
     tailoredResume.setJobDescription(savedJD);
     tailoredResume.setTitle(safeString(resume.getTitle()));
     tailoredResume.setSummary(safeString(resume.getSummary()));
-    tailoredResume.setMatchedSkills(skillMatchResult.getMatchedSkills());
-    tailoredResume.setExperienceBullets(safeSet(resume.getExperienceBullets()));
+tailoredResume.setMatchedSkills(new LinkedHashSet<>(skillMatchResult.getMatchedSkills()));
+//tailoredResume.setAiSuggestions(new ArrayList<>(suggestions));
+
+tailoredResume.setExperienceBullets(new LinkedHashSet<>(safeSet(resume.getExperienceBullets())));
 
     double matchPercentage =
             calculateMatchPercentage(skillMatchResult, requiredSkills, preferredSkills);

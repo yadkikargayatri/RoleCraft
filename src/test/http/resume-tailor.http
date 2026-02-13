@@ -3,22 +3,41 @@ Content-Type: application/json
 
 {
   "resume": {
-    "title": "Backend Engineer",
-    "summary": "Java Spring Boot AWS microservices developer",
-    "skills": ["Java", "Spring Boot", "AWS"],
+    "title": "Senior Backend Engineer",
+    "summary": "Experienced Java and Spring Boot developer with cloud expertise.",
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "AWS",
+      "Microservices",
+      "REST"
+    ],
     "experienceBullets": [
-      "Developed REST APIs using Spring Boot",
-      "Deployed applications on AWS EC2",
-      "Implemented CI/CD pipelines"
+      "Designed and developed scalable REST APIs using Spring Boot",
+      "Deployed microservices to AWS EC2 and configured load balancers",
+      "Implemented CI/CD pipelines using GitHub Actions",
+      "Optimized SQL queries and improved performance by 30%"
     ]
   },
   "jobDescription": {
     "title": "Backend Software Engineer",
-    "requiredSkills": ["Java", "Spring Boot", "AWS"],
-    "preferredSkills": ["Docker"],
-    "keywords": ["microservices", "cloud"]
+    "requiredSkills": [
+      "Java",
+      "Spring Boot",
+      "AWS"
+    ],
+    "preferredSkills": [
+      "Docker",
+      "Kubernetes"
+    ],
+    "keywords": [
+      "microservices",
+      "cloud",
+      "scalability"
+    ]
   }
 }
+
 
 
 

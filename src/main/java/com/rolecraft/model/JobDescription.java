@@ -53,6 +53,10 @@ public class JobDescription {
 
      @OneToMany(mappedBy = "jobDescription", cascade = CascadeType.ALL)
     private List<TailoredResume> tailoredResumes;
+
+    public Long getId() {
+        return id;
+    }
    
     public String getRawText() {
         return rawText;

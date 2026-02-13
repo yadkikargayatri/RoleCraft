@@ -20,6 +20,7 @@ com\rolecraft\model\JobDescriptionRequest.class
 com\rolecraft\ai\service\impl\SkillExtractionServiceImpl.class
 com\rolecraft\ai\service\impl\AIRecommendationServiceImpl.class
 com\rolecraft\parser\JobDescriptionParser.class
+com\rolecraft\service\ResumeApplicationService.class
 com\rolecraft\controller\advice\GlobalExceptionHandler.class
 com\rolecraft\repository\TailoredResumeRepository.class
 com\rolecraft\service\ATSScoringService.class
