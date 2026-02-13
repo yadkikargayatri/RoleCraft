@@ -1,9 +1,16 @@
 package com.rolecraft.service;
 
-import com.rolecraft.model.ATSScoreResult;
-import com.rolecraft.model.JobDescription;
-import com.rolecraft.model.SkillMatchResult;
+import java.util.List;
+import java.util.Set;
+
+import com.rolecraft.model.Resume;
 
 public interface ATSScoringService {
-    ATSScoreResult calculateScore(SkillMatchResult skillMatchResult, JobDescription jd);
+   
+    double calculateATSScore(
+            Set<String> resumeSkills,
+            List<String> keywords,
+            Set<String> requiredSkills,
+            Set<String> preferredSkills,
+            Resume resume);
 }

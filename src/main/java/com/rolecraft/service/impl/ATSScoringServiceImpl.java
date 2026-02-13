@@ -1,44 +1,54 @@
 package com.rolecraft.service.impl;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
-import com.rolecraft.model.ATSScoreResult;
-import com.rolecraft.model.JobDescription;
-import com.rolecraft.model.SkillMatchResult;
+import com.rolecraft.model.Resume;
 import com.rolecraft.service.ATSScoringService;
 
 @Service
 public class ATSScoringServiceImpl implements ATSScoringService {
 
     @Override
-    public ATSScoreResult calculateScore(SkillMatchResult skillMatchResult, JobDescription jd) {
-        ATSScoreResult result = new ATSScoreResult();
+    public double calculateATSScore(
+            Set<String> resumeSkills,
+            List<String> keywords,
+            Set<String> requiredSkills,
+            Set<String> preferredSkills,
+            Resume resume) {
 
-        int requiredTotal = jd.getRequiredSkills().size();
-        int preferredTotal = jd.getPreferredSkills().size();
+        double requiredWeight = 0.5;
+        double preferredWeight = 0.3;
+        double experienceWeight = 0.2;
 
-        int requiredMatched = skillMatchResult.getMatchedSkills().size();
-        int preferredMatched = skillMatchResult.getMatchedSkills().size();
+        long matchedRequired = requiredSkills.stream()
+                .filter(resumeSkills::contains)
+                .count();
 
-        double requiredScore =
-                requiredTotal == 0 ? 100 :
-                ((double) requiredMatched / requiredTotal) * 60;
+        double requiredScore = requiredSkills.isEmpty()
+                ? 0
+                : ((double) matchedRequired / requiredSkills.size()) * requiredWeight;
 
-        double preferredScore =
-                preferredTotal == 0 ? 100 :
-                ((double) preferredMatched / preferredTotal) * 25;
+        long matchedPreferred = preferredSkills.stream()
+                .filter(resumeSkills::contains)
+                .count();
 
-        double coverageScore =
-                ((double) (requiredMatched + preferredMatched) /
-                (requiredTotal + preferredTotal)) * 15;
-        
-        result.setRequiredSkillScore(requiredScore);
-        result.setPreferredSkillScore(preferredScore);
-        result.setCoverageScore(coverageScore);
-        result.setFinalScore(
-                requiredScore + preferredScore + coverageScore
-        );
+        double preferredScore = preferredSkills.isEmpty()
+                ? 0
+                : ((double) matchedPreferred / preferredSkills.size()) * preferredWeight;
 
-        return result;
+        String summary = resume.getSummary() == null ? "" : resume.getSummary().toLowerCase();
+
+        long matchedKeywords = keywords.stream()
+                .filter(k -> summary.contains(k.toLowerCase()))
+                .count();
+
+        double experienceScore = keywords.isEmpty()
+                ? 0
+                : ((double) matchedKeywords / keywords.size()) * experienceWeight;
+
+        return (requiredScore + preferredScore + experienceScore) * 100;
     }
 }

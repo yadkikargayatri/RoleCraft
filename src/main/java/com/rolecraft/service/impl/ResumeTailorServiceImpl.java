@@ -1,6 +1,5 @@
 package com.rolecraft.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -51,41 +50,29 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
         this.aiRecommendationService = aiRecommendationService;
     }
 
-    // =============================
-    // PUBLIC API
-    // =============================
-    @Transactional
-    @Override
-public TailoredResume tailorResume(Resume resume,JobDescription jd) {
-
-    logger.info("Starting resume tailoring for job: {}", jd.getTitle());
+   // public API method to tailor resume based on job description
+@Transactional
+@Override
+public TailoredResume tailorResume(Resume resume, JobDescription jd) {
 
     validateResume(resume);
     validateJobDescription(jd);
-    Resume savedResume = resumeRepository.save(resume); // save resume first to ensure it has an ID for relationships
-    JobDescription savedJD = jobDescriptionRepository.save(jd); // save JD to ensure it has an ID for relationships
+
+    logger.info("Starting resume tailoring for job: {}", jd.getTitle());
+
+    Resume savedResume = resumeRepository.save(resume);
+    JobDescription savedJD = jobDescriptionRepository.save(jd);
 
     Set<String> resumeSkills = safeSet(resume.getSkills());
     Set<String> requiredSkills = safeSet(jd.getRequiredSkills());
     Set<String> preferredSkills = safeSet(jd.getPreferredSkills());
     List<String> keywords = safeList(jd.getKeywords());
 
-    logger.debug("Resume skills count: {}", resumeSkills.size());
-    logger.debug("Required skills count: {}", requiredSkills.size());
-    logger.debug("Preferred skills count: {}", preferredSkills.size());
+    SkillMatchResult skillMatchResult =
+            skillMatchService.matchSkills(requiredSkills, resumeSkills, Set.of());
 
-    // Skill Matching
-    SkillMatchResult skillMatchResult = skillMatchService.matchSkills(
-            requiredSkills,
-            resumeSkills,
-            new HashSet<>()
-    );
+    TailoredResume tailoredResume = new TailoredResume();
 
-    logger.debug("Matched skills count: {}",
-            skillMatchResult.getMatchedSkills().size());
-
-    // Build Tailored Resume
-    TailoredResume tailoredResume = new TailoredResume(); // create tailored resume
     tailoredResume.setResume(savedResume);
     tailoredResume.setJobDescription(savedJD);
     tailoredResume.setTitle(safeString(resume.getTitle()));
@@ -102,16 +89,10 @@ public TailoredResume tailorResume(Resume resume,JobDescription jd) {
     tailoredResume.setMatchPercentage(matchPercentage);
     tailoredResume.setAtsScore(atsScore);
 
-    logger.info("Match percentage calculated: {}%", matchPercentage);
-    logger.info("ATS score calculated: {}%", atsScore);
-
-    // AI Suggestions
     List<String> suggestions =
             aiRecommendationService.suggestImprovements(resume, jd, skillMatchResult);
 
     tailoredResume.setAiSuggestions(suggestions);
-
-    logger.debug("AI suggestions generated: {}", suggestions.size());
 
     logger.info("Resume tailoring completed successfully.");
 
@@ -119,9 +100,8 @@ public TailoredResume tailorResume(Resume resume,JobDescription jd) {
 }
 
 
-    // =============================
-    // SCORE CALCULATIONS
-    // =============================
+
+  //score calculation methods
     private double calculateMatchPercentage(
             SkillMatchResult result,
             Set<String> required,
@@ -175,9 +155,7 @@ public TailoredResume tailorResume(Resume resume,JobDescription jd) {
         return (requiredScore + preferredScore + experienceScore) * 100;
     }
 
-    // =============================
-    // SAFE UTILITIES
-    // =============================
+   //safe utility methods to handle nulls gracefully
     private Set<String> safeSet(Set<String> input) {
         return input == null ? Set.of() : input;
     }
@@ -190,9 +168,7 @@ public TailoredResume tailorResume(Resume resume,JobDescription jd) {
         return input == null ? "" : input;
     }
 
-    // =============================
-    // VALIDATION
-    // =============================
+   //validation methods to ensure input integrity before processing
     private void validateResume(Resume resume) {
         if (resume == null) {
             throw new InvalidResumeException("Resume must not be null");
