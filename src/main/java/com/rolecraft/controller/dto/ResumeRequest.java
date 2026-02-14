@@ -1,5 +1,7 @@
 package com.rolecraft.controller.dto;
 
+import com.rolecraft.model.JobDescription;
+
 import jakarta.validation.constraints.NotBlank;
 
 public class ResumeRequest {
@@ -8,12 +10,12 @@ public class ResumeRequest {
     private String resumeText;
 
     @NotBlank(message = "Job description cannot be blank")
-    private String jobDescription;
+    private JobDescription jobDescription;
 
     // Constructors
     public ResumeRequest() {}
 
-    public ResumeRequest(String resumeText, String jobDescription) {
+    public ResumeRequest(String resumeText, JobDescription jobDescription) {
         this.resumeText = resumeText;
         this.jobDescription = jobDescription;
     }
@@ -27,11 +29,11 @@ public class ResumeRequest {
         this.resumeText = resumeText;
     }
 
-    public String getJobDescription() {
+    public JobDescription getJobDescription() {
         return jobDescription;
     }
 
-    public void setJobDescription(String jobDescription) {
+    public void setJobDescription(JobDescription jobDescription) {
         this.jobDescription = jobDescription;
     }
 }

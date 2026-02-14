@@ -1,5 +1,6 @@
 package com.rolecraft.parser;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -27,8 +28,8 @@ public class JobDescriptionParser {
         // ✅ Use AI for required and preferred skills
        List<String> extractedSkills = extractSkills(jdText);
        
-        jd.setRequiredSkills(extractedSkills);
-        jd.setPreferredSkills(extractedSkills);
+        jd.setRequiredSkills(new HashSet<>(extractedSkills)); // Store as Set to avoid duplicates
+        jd.setPreferredSkills(new HashSet<>(extractedSkills));
         jd.setSkills(extractedSkills);
        // jd.setKeywords(extractKeywords(jdText, extractedSkills));
 

@@ -34,7 +34,7 @@ public class JobDescription {
     @CollectionTable(name = "jd_required_skills", joinColumns = @JoinColumn(name = "jd_id"))
     @Column(name = "skill")
     @NotEmpty(message = "Required skills must not be blank")
-    private Set<String> requiredSkills =new LinkedHashSet<>(); // was incorrectly List<String>
+    private Set<String> requiredSkills = new LinkedHashSet<>(); // was incorrectly List<String>
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "jd_preferred_skills", joinColumns = @JoinColumn(name = "jd_id"))
@@ -51,8 +51,8 @@ public class JobDescription {
     private String rawText;
     private List<String> skills = new ArrayList<>(); // Added field to hold extracted skills
 
-     @OneToMany(mappedBy = "jobDescription", cascade = CascadeType.ALL)
-    private List<TailoredResume> tailoredResumes;
+    @OneToMany(mappedBy = "jobDescription", cascade = CascadeType.ALL)
+    //private List<TailoredResume> tailoredResumes;
 
     public Long getId() {
         return id;
@@ -70,8 +70,8 @@ public class JobDescription {
         return skills;
     }
 
-    public void setSkills(List<String> skills) {
-        this.skills = skills;
+    public void setSkills(List<String> skills2) {
+        this.skills = new ArrayList<>(skills2);
     }
 
     public String getTitle() {
@@ -86,7 +86,7 @@ public class JobDescription {
         return requiredSkills;
     }
 
-    public void setRequiredSkills(List<String> extractedSkills) {
+    public void setRequiredSkills(Set<String> extractedSkills) {
         this.requiredSkills = new LinkedHashSet<>(extractedSkills);
     }
 
@@ -94,7 +94,7 @@ public class JobDescription {
         return preferredSkills;
     }
 
-    public void setPreferredSkills(List<String> extractedSkills) {
+    public void setPreferredSkills(Set<String> extractedSkills) {
         this.preferredSkills = new LinkedHashSet<>(extractedSkills);
     }
 

@@ -46,7 +46,9 @@ public class ResumeTailorController {
             @Valid @RequestBody ResumeTailorRequest request) {
 
         logger.info("Received resume tailoring request for job title: {}",
+           //
             request.getJobDescription().getTitle());
+           // String jobTitle = request.getJobDescription().getTitle();
 
         TailoredResume tailoredResume =
                 resumeTailorService.tailorResume(
