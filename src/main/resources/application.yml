@@ -14,3 +14,9 @@ spring:
   h2:
     console:
       enabled: true
+
+rolecraft:
+  ats:
+    required-weight: 0.5
+    preferred-weight: 0.3
+    experience-weight: 0.2
