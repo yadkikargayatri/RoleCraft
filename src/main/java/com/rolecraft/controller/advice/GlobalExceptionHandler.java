@@ -1,5 +1,9 @@
 package com.rolecraft.controller.advice;
 
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,34 +18,29 @@ import com.rolecraft.exception.InvalidResumeException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(InvalidResumeException.class)
     public ResponseEntity<ApiResponseWrapper<Object>> handleInvalidResume(
             InvalidResumeException ex) {
 
-        ApiError error = new ApiError(
+        return buildErrorResponse(
                 "INVALID_RESUME",
                 ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value()
+                HttpStatus.BAD_REQUEST
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponseWrapper.failure(error));
     }
 
     @ExceptionHandler(InvalidJobDescriptionException.class)
     public ResponseEntity<ApiResponseWrapper<Object>> handleInvalidJobDescription(
             InvalidJobDescriptionException ex) {
 
-        ApiError error = new ApiError(
+        return buildErrorResponse(
                 "INVALID_JOB_DESCRIPTION",
                 ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value()
+                HttpStatus.BAD_REQUEST
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponseWrapper.failure(error));
     }
 
     // DTO Validation errors (@Valid)
@@ -52,35 +51,42 @@ public class GlobalExceptionHandler {
         String message = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .findFirst()
-                .map(err -> err.getDefaultMessage())
-                .orElse("Validation failed");
+                .map(err -> err.getField() + ": " + err.getDefaultMessage())
+                .collect(Collectors.joining("; "));
 
-        ApiError error = new ApiError(
+        return buildErrorResponse(
                 "VALIDATION_ERROR",
                 message,
-                HttpStatus.BAD_REQUEST.value()
+                HttpStatus.BAD_REQUEST
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponseWrapper.failure(error));
     }
 
-    // Catch-all
+    // Catch-all fallback
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponseWrapper<Object>> handleGeneric(Exception ex) {
 
-   ex.printStackTrace(); // Log the exception for debugging (temporary)
+        logger.error("Unhandled exception occurred", ex);
 
-        ApiError error = new ApiError(
+        return buildErrorResponse(
                 "INTERNAL_SERVER_ERROR",
                 "Unexpected error occurred",
-                HttpStatus.INTERNAL_SERVER_ERROR.value()
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    private ResponseEntity<ApiResponseWrapper<Object>> buildErrorResponse(
+            String code,
+            String message,
+            HttpStatus status) {
+
+        ApiError error = new ApiError(
+                code,
+                message,
+                status.value()
         );
 
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(status)
                 .body(ApiResponseWrapper.failure(error));
     }
 }
