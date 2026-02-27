@@ -45,10 +45,12 @@ public class ResumeTailorController {
     public ResponseEntity<ApiResponseWrapper<TailoredResume>> tailorResume(
             @Valid @RequestBody ResumeTailorRequest request) {
 
-        logger.info("Received resume tailoring request for job title: {}",
-           //
-            request.getJobDescription().getTitle());
-           // String jobTitle = request.getJobDescription().getTitle();
+       String jobTitle = request.getJobDescription() != null   // defensive check for null job description to avoid NPE during logging
+        ? request.getJobDescription().getTitle()
+        : "UNKNOWN";
+
+        logger.info("Received resume tailoring request for job title: {}", jobTitle);
+          
 
         TailoredResume tailoredResume =
                 resumeTailorService.tailorResume(

@@ -6,7 +6,6 @@ import com.rolecraft.model.TailoredResume;
 
 public interface ResumeTailorService {
      
-     TailoredResume tailorResume(Resume resume, JobDescription jd);
+     TailoredResume tailorResume(Resume resume, JobDescription jobDescription);
      
-
 }

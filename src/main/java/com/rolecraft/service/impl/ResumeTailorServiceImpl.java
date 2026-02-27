@@ -52,9 +52,9 @@ public class ResumeTailorServiceImpl implements ResumeTailorService {
     }
 
    // public API method to tailor resume based on job description
-@Transactional
-@Override
-public TailoredResume tailorResume(Resume resume, JobDescription jd) {
+    @Transactional
+    @Override
+    public TailoredResume tailorResume(Resume resume, JobDescription jd) {
 
     validateResume(resume);
     validateJobDescription(jd);
@@ -70,18 +70,7 @@ public TailoredResume tailorResume(Resume resume, JobDescription jd) {
     List<String> keywords = safeList(jd.getKeywords());
 
     SkillMatchResult skillMatchResult =
-            skillMatchService.matchSkills(requiredSkills, resumeSkills, Set.of());
-
-    TailoredResume tailoredResume = new TailoredResume();
-
-    tailoredResume.setResume(savedResume);
-    tailoredResume.setJobDescription(savedJD);
-    tailoredResume.setTitle(safeString(resume.getTitle()));
-    tailoredResume.setSummary(safeString(resume.getSummary()));
-tailoredResume.setMatchedSkills(new LinkedHashSet<>(skillMatchResult.getMatchedSkills()));
-//tailoredResume.setAiSuggestions(new ArrayList<>(suggestions));
-
-tailoredResume.setExperienceBullets(new LinkedHashSet<>(safeSet(resume.getExperienceBullets())));
+            skillMatchService.matchSkills(requiredSkills, resumeSkills, preferredSkills);
 
     double matchPercentage =
             calculateMatchPercentage(skillMatchResult, requiredSkills, preferredSkills);
@@ -89,15 +78,29 @@ tailoredResume.setExperienceBullets(new LinkedHashSet<>(safeSet(resume.getExperi
     double atsScore =
             calculateATSScore(resumeSkills, keywords, requiredSkills, preferredSkills, resume);
 
+    List<String> suggestions;
+    try {
+        suggestions = aiRecommendationService.suggestImprovements(savedResume, savedJD, skillMatchResult);
+    } catch (Exception e) {
+        logger.error("AI suggestion generation failed", e);
+            suggestions = List.of("AI suggestions unavailable at this time.");
+    }
+    // build tailored resume
+    TailoredResume tailoredResume = new TailoredResume();
+    tailoredResume.setResume(savedResume);
+    tailoredResume.setJobDescription(savedJD);
+    tailoredResume.setTitle(safeString(resume.getTitle()));
+    tailoredResume.setSummary(safeString(resume.getSummary()));
+    tailoredResume.setMatchedSkills(new LinkedHashSet<>(skillMatchResult.getMatchedSkills()));
+    //tailoredResume.setAiSuggestions(new ArrayList<>(suggestions));
+    tailoredResume.setExperienceBullets(new LinkedHashSet<>(safeSet(resume.getExperienceBullets())));
     tailoredResume.setMatchPercentage(matchPercentage);
     tailoredResume.setAtsScore(atsScore);
-
-    List<String> suggestions =
-            aiRecommendationService.suggestImprovements(resume, jd, skillMatchResult);
-
     tailoredResume.setAiSuggestions(suggestions);
+    //List<String> suggestions = aiRecommendationService.suggestImprovements(resume, jd, skillMatchResult);
 
-    logger.info("Resume tailoring completed successfully.");
+  //  logger.info("Resume tailoring completed successfully.");
+    logger.info("Match %: {}, ATS: {}", matchPercentage, atsScore);
 
     return tailoredResumeRepository.save(tailoredResume);
 }

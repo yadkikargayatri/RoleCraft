@@ -6,6 +6,7 @@ com\rolecraft\model\JobDescription.class
 com\rolecraft\service\impl\ResumeTailorServiceImpl.class
 com\rolecraft\ai\service\SkillExtractionService.class
 com\rolecraft\controller\JobDescriptionController.class
+com\rolecraft\controller\dto\ResumeTailorResponse.class
 com\rolecraft\controller\dto\SkillMatchRequest.class
 com\rolecraft\service\ResumeServiceImpl.class
 com\rolecraft\controller\dto\ResumeRequest.class

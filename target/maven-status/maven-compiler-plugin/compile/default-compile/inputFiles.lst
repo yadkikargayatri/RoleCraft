@@ -38,6 +38,7 @@ C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeServiceImpl.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\ai\client\MockLLMClient.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\repository\TailoredResumeRepository.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\parser\JobDescriptionParser.java
+C:\src\RoleCraft\src\main\java\com\rolecraft\controller\dto\ResumeTailorResponse.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\Resume.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\model\ATSScoreResult.java
 C:\src\RoleCraft\src\main\java\com\rolecraft\service\ResumeTailorService.java
