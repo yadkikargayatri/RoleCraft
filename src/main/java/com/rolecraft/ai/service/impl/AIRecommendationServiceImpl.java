@@ -43,11 +43,16 @@ public class AIRecommendationServiceImpl implements AIRecommendationService {
             Matched Skills: %s
             Missing Skills: %s
             """.formatted(
-                jd.getRequiredSkills(),
-                jd.getPreferredSkills(),
-                resume.getSkills(),
+                //jd.getRequiredSkills(),
+                String.join(", ", jd.getRequiredSkills()),
+                //jd.getPreferredSkills(),
+                String.join(", ", jd.getPreferredSkills()),
+                //resume.getSkills(),
+                String.join(", ", resume.getSkills()),
+                //resume.getSummary(),
                 resume.getSummary(),
                 skillMatchResult.getMatchedSkills(),
+
                 skillMatchResult.getMissingSkills()
             );
 

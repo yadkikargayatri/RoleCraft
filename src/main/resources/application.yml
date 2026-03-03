@@ -20,3 +20,7 @@ rolecraft:
     required-weight: 0.5
     preferred-weight: 0.3
     experience-weight: 0.2
+
+  openai:
+  api-key: ${OPENAI_API_KEY}
+  url: https://api.openai.com/v1/chat/completions

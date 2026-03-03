@@ -40,9 +40,9 @@ Role expectations 🤔
 High-Level Architecture 🖊️
 
 	Client (Web UI)
-  	 |
+  	|
 	Resume Tailoring API (Spring Boot)
-  	 |
+  	|
    	+-- Resume Parser Service
    	|
    	+-- JD Ingestion Service

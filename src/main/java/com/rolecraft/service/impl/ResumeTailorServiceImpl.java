@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import com.rolecraft.ai.service.AIRecommendationService;
@@ -24,6 +25,7 @@ import com.rolecraft.service.SkillMatchService;
 import jakarta.transaction.Transactional;
 
 @Service
+@ConfigurationProperties(prefix = "rolecraft.ats")
 public class ResumeTailorServiceImpl implements ResumeTailorService {
 
     private final SkillMatchService skillMatchService;
